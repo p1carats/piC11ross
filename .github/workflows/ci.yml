@@ -20,7 +20,8 @@ jobs:
       - name: Install unit testing tools (criterion & gcovr)
         run: |
         sudo add-apt-repository ppa:snaipewastaken/ppa
-        sudo apt update && apt install criterion-dev
+        sudo apt update
+        sudo apt install criterion-dev
 
       - name: Build
         run: make all
