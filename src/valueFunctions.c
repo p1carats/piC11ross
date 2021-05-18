@@ -11,7 +11,7 @@ int getDoubleLinkedListSize(DoubleLinkedList *liste){
 
 	if (liste != NULL){
 		retour = liste->size;
-	}
+	} 
 	return retour;
 }
 
@@ -40,7 +40,8 @@ DoubleLinkedListElem *getItemAtIndexFromDoubleLinkedList(DoubleLinkedList *liste
 // obtient la valeur d'un élément
 int getValueOfDoubleLinkedListItem(DoubleLinkedListElem *item, int *valeur){
 
-	*valeur = item->data;
+
+	*valeur = item->tab;
 
 	return 0;
 
@@ -58,14 +59,14 @@ DoubleLinkedListElem *getNextDoubleLinkedListItem(DoubleLinkedList *liste, Doubl
 			bool continuer = true;
 
 			if(liste->head == item){ // Si l'élément est en tête
-				if(item->data == value){
+				if(item->tab == value){
 					retour = item;
 				}else{
 					retour = NULL;
 				}
 			}else{
 				while(item != liste->head && continuer){
-					if(item->data == value){
+					if(item->tab == value){
 						retour = item;
 						continuer =false;
 					}
@@ -82,14 +83,14 @@ DoubleLinkedListElem *getNextDoubleLinkedListItem(DoubleLinkedList *liste, Doubl
 			bool continuer = true;
 
 			if(liste->tail == item){ // Si l'élément est en queue
-				if(item->data == value){
+				if(item->tab == value){
 					retour = item;
 				}else{
 					retour = NULL;
 				}
 			}else{
 				while(item != liste->tail && continuer){
-					if(item->data == value){
+					if(item->tab == value){
 						retour = item;
 						continuer = false;
 					}
@@ -118,7 +119,7 @@ int setValueOfDoubleLinkedListItem(DoubleLinkedList *liste, DoubleLinkedListElem
 
 	if (liste != NULL && item != NULL){
 
-		item->data = value;
+		item->tab = value;
 
 	}else{
 		retour = -1;

@@ -14,10 +14,10 @@ DoubleLinkedList *newDoubleLinkedList(){
 }
 
 // instanciation (création) d'un élément (maillon) à insérer dans une liste chaînée bilatère avec stockage de la donnée value dans l'élément de liste
-DoubleLinkedListElem *newDoubleLinkedListItem(int value){
+DoubleLinkedListElem *newDoubleLinkedListItem(int value, int pos){
 	DoubleLinkedListElem *maillon = (DoubleLinkedListElem*) malloc(sizeof(DoubleLinkedListElem));
 	if (maillon != NULL){
-		maillon->data = value;
+		maillon->tab[pos] = value;
 		maillon->next = NULL;
 		maillon->previous = NULL;
 		return maillon;
@@ -34,7 +34,10 @@ int displayDoubleList(DoubleLinkedList *liste){
 
 	if (liste != NULL){
 		for (int i = 0; i < liste->size; i++){
-			printf("%d) %d\n", i, elem->data);
+			
+			for(int s=0; s<10; s++)
+			printf("%d) %d\n", i, elem->tab[s]);
+			
 			elem = elem->next;
 		}
 		retour = 0;
@@ -53,7 +56,9 @@ int revDisplayDoubleList(DoubleLinkedList *liste){
 
 	if (liste != NULL){
 		for (int i = liste->size - 1; i >= 0 ; i--){
-			printf("%d) %d\n", i, elem->data);
+			for (int s = 0; s < 10; s++)
+				printf("%d) %d\n", i, elem->tab[s]);
+
 			elem = elem->previous;
 		}
 		retour = 0;
