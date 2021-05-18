@@ -1,22 +1,27 @@
 CC=gcc
 CFLAGS=-I. -g3 -Wall -W
-Name=picross.exe
-SRC_DIR=./src
-OBJ_DIR=./obj
-SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
-OBJ_FILES := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
-all: $(Name)
+BUILD_TARGET ?= picross.exe
+BUILD_DIR ?= ./build
+SRC_DIR ?= ./src
 
-$(Name): $(OBJ_FILES)
+SRC_FILES := $(shell find $(SRC_DIR) -name *.c)
+OBJ_FILES := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC_FILES))
+DEP_FILES := $(OBJS:.o=.d)
+
+TEST_TARGET = unit_tests
+TEST_FLAGS = $(LFLAGS) -lcriterion --coverage
+
+$(BUILD_DIR)/$(BUILD_TARGET): $(OBJ_FILES)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p obj
-	gcc $(CFLAGS) -c -o $@ $<
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	$(MKDIR_P) $(dir $@)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
+.PHONY: clean
 clean:
-	rm -r ./obj
+	$(RM) -r $(BUILD_DIR)
 
-fclean: clean
-	rm -f $(Name)
+-include $(DEP_FILES)
+MKDIR_P ?= mkdir -p

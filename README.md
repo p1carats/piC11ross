@@ -1,20 +1,32 @@
 # piC11ross
 ![CI status](https://github.com/inspwastaken/piC11ross/actions/workflows/ci.yml/badge.svg)
 
-
 Complete reimplementation of Picross written in C, with solver and level generator.
+
+> **What is Picross?** Also known as Nonograms and various other names, Picross are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
+
+## Getting started
+
+Clone this repo.
 
 ## Components
 
-### Game itself - "kernel"
-
 ### Level generator
+
+This part of the project must support several key features :
+ - Generate from a user-choosen image using a py script (soon) and a random-defined pattern
+ - Support an unlimited number of column/lines 
 
 ### Resolver
 
+This resolver eventually represents the hardest part of this project. This is a critical component whose able to validate and complete any Picross.
+This algorithm must support every generated grid, and resloves it in a human-comprehensive way (i.e. without cheating).
+
 ## Testing
 
-Unit testing are handled by [criterion](https://github.com/Snaipe/Criterion). Coverage testing is handled by [gcovr](https://github.com/gcovr/gcovr).
+Unit tests are powered by [Criterion](https://github.com/Snaipe/Criterion). Coverage testing is handled by [gcovr](https://github.com/gcovr/gcovr).
+
+For compatibility reasons, unit tests are **only available on Linux**.
 
 ## Licensing
 

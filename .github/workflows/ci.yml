@@ -1,9 +1,5 @@
-name: Continuous Integration
+name: CI
 
-# The "on" option will specify when to run this action and on which branch
-# Usually for a CI action you would like to run it on every pull request and on push
-# For CD you would probably only want to run it on closed pull requests or direct pushes on master
-# If you want to run it manually you would add "worflow_dispatch"
 on:
   push:
     branches: [ master ]
@@ -13,9 +9,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build
+      - name: Install libraries
+        run: | 
+          sudo apt-get update
+          sudo apt-get install build-essential gcc gdb valgrind criterion-dev
+      
+      - name: Build project
         run: make all
