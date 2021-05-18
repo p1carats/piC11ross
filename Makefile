@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-I. -g3
+CFLAGS=-I. -g3 -Wall -W
 
 SRC_DIR=./src
 OBJ_DIR=./obj
