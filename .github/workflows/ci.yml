@@ -9,18 +9,13 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-  worflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Install unit testing tools (criterion & gcovr)
-        run: |
-        sudo add-apt-repository ppa:snaipewastaken/ppa
-        sudo apt update && apt install criterion-dev
 
       - name: Build
         run: make all
