@@ -16,7 +16,13 @@ jobs:
       - name: Install libraries
         run: | 
           sudo apt-get update
-          sudo apt-get install build-essential gcc gdb valgrind criterion-dev
+          sudo apt-get install build-essential gcc gdb valgrind
+
+      - name: Build & install Criterion
+        run: |
+          git clone --recursive https://github.com/Snaipe/Criterion && cd Criterion/
+          meson build && ninja -C build
+          sudo ninja -C build install
       
       - name: Build project
         run: make all
