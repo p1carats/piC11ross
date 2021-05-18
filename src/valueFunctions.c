@@ -55,7 +55,7 @@ int setValueOfDoubleLinkedListItem(DoubleLinkedList *liste, DoubleLinkedListElem
 	if (liste != NULL && item != NULL){
 
 		free(item->tab);
-		item->tab = *value; 
+		item->tab = value;
 
 	}else{
 		retour = -1;
