@@ -18,8 +18,6 @@ typedef struct DList {
 
 
 int main() {
-
-
-
+	printf("Hello word");
 	return 0;
 }
