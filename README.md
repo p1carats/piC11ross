@@ -1,14 +1,16 @@
 # piC11ross
+![CI status](https://github.com/inspwastaken/piC11ross/actions/workflows/ci.yml/badge.svg)
+
 
 Complete reimplementation of Picross written in C, with solver and level generator.
 
 ## Components
 
-## Game itself - "kernel"
+### Game itself - "kernel"
 
-## Level generator
+### Level generator
 
-## Resolver
+### Resolver
 
 ## Testing
 

@@ -5,7 +5,7 @@ name: Continuous Integration
 # For CD you would probably only want to run it on closed pull requests or direct pushes on master
 # If you want to run it manually you would add "worflow_dispatch"
 on:
-  push: []
+  push:
     branches: [ master ]
   pull_request: []
     branches: [ master ]
