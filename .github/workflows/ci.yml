@@ -22,7 +22,7 @@ jobs:
         run: |
           git clone --recursive https://github.com/Snaipe/Criterion && cd Criterion/
           meson build && ninja -C build
-          sudo ninja -C build install
+          sudo su && ninja -C build install && exit
       
       - name: Build project
         run: make all
