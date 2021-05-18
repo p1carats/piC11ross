@@ -85,3 +85,16 @@ int insertItemAtDoubleLinkedListTail(DoubleLinkedList *liste, DoubleLinkedListEl
 
 	return retour;
 }
+
+
+// obtient la valeur d'un élément
+int getValueOfDoubleLinkedListItem(DoubleLinkedListElem *item, int *valeur, int taille){
+
+	for (int i = 0; i < taille; i++){
+		valeur[i] = item->tab[i];
+	}
+
+	return 0;
+
+}
+

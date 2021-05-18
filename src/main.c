@@ -21,6 +21,7 @@ int main(void){
 	list = newDoubleLinkedList();
 	int tab2[10];
 	int tab1[10] = {0};
+	int tab3[10];
 
 	for (int i = 0; i < 10; i++){
 		tab2[i] = i;
@@ -32,7 +33,13 @@ int main(void){
 	insertItemAtDoubleLinkedListTail(list, maillon);
 	insertItemAtDoubleLinkedListTail(list, maillon2);
 	displayDoubleList(list, 10);
+	getValueOfDoubleLinkedListItem(maillon2, tab3, 10);
 
+	for (int h = 0; h < 10; h++){
+		printf("%d ", tab3[h]);
+	}
+
+	printf("\n");
 
 	return 0;
 }
