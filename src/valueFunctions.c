@@ -47,79 +47,15 @@ int getValueOfDoubleLinkedListItem(DoubleLinkedListElem *item, int *valeur){
 
 }
 
-// obtention d'un pointeur sur le prochain élément contenant "value", en partant de l'élément "item" et en
-// allant soit vers la tête (UP), soit vers la queue (DOWN)
-DoubleLinkedListElem *getNextDoubleLinkedListItem(DoubleLinkedList *liste, DoubleLinkedListElem *item, int value, int sens){
-	DoubleLinkedListElem *retour = NULL;
-
-	if (liste != NULL && item != NULL){ // Si tout existe
-
-		if(sens == UP){
-
-			bool continuer = true;
-
-			if(liste->head == item){ // Si l'élément est en tête
-				if(item->tab == value){
-					retour = item;
-				}else{
-					retour = NULL;
-				}
-			}else{
-				while(item != liste->head && continuer){
-					if(item->tab == value){
-						retour = item;
-						continuer =false;
-					}
-					item = item->previous;
-				}
-
-				if (continuer){
-					retour = NULL;
-				}
-			}
-
-		}else if(sens == DOWN){
-
-			bool continuer = true;
-
-			if(liste->tail == item){ // Si l'élément est en queue
-				if(item->tab == value){
-					retour = item;
-				}else{
-					retour = NULL;
-				}
-			}else{
-				while(item != liste->tail && continuer){
-					if(item->tab == value){
-						retour = item;
-						continuer = false;
-					}
-					item = item->next;
-				}
-
-				if (continuer){
-					retour = NULL;
-				}
-			}
-
-		}else{ // Dans le cas ou le sens n'est pas defini !
-			retour = NULL;
-		}
-
-	}else{
-		retour = NULL;
-	}
-
-	return retour;
-}
 
 // modifie la valeur d'un élément
-int setValueOfDoubleLinkedListItem(DoubleLinkedList *liste, DoubleLinkedListElem *item, int value){
+int setValueOfDoubleLinkedListItem(DoubleLinkedList *liste, DoubleLinkedListElem *item, int *value){
 	int retour = 0;
 
 	if (liste != NULL && item != NULL){
 
-		item->tab = value;
+		free(item->tab);
+		item->tab = *value; 
 
 	}else{
 		retour = -1;
