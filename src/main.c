@@ -1,23 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "main.h"
 
-
-typedef struct DListNode {
-	int tab[10];
-	struct DListNode* next;
-	struct DListNode* previous;
-}DListNode;
-
-
-typedef struct DList {
-	int length;
-	struct DListNode* begin;
-	struct DListNode* end; 
-}DList;
-
-
-
-int main() {
-	printf("Hello word");
+int main(void){
+	printf("Hello word\n");
 	return 0;
 }
