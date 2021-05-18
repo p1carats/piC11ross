@@ -13,7 +13,7 @@
 // LISTES BILATERES **************************************************
 
 typedef struct DoubleLinkedListElem {
-	int data;
+	int tab[10];
 	struct DoubleLinkedListElem *previous;
 	struct DoubleLinkedListElem *next;
 } DoubleLinkedListElem;
@@ -28,7 +28,7 @@ typedef struct DoubleLinkedList {
 DoubleLinkedList *newDoubleLinkedList();
 
 // instanciation (création) d'un élément (maillon) à insérer dans une liste chaînée bilatère avec stockage de la donnée value dans l'élément de liste
-DoubleLinkedListElem *newDoubleLinkedListItem(int value);
+DoubleLinkedListElem *newDoubleLinkedListItem(int value, int pos);
 
 
 // affichage des éléments d'une liste chaînée bilatère en commençant par la tête
