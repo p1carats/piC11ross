@@ -1,0 +1,26 @@
+name: Continuous Integration
+
+# The "on" option will specify when to run this action and on which branch
+# Usually for a CI action you would like to run it on every pull request and on push
+# For CD you would probably only want to run it on closed pull requests or direct pushes on master
+# If you want to run it manually you would add "worflow_dispatch"
+on:
+  push: []
+    branches: [ master ]
+  pull_request: []
+    branches: [ master ]
+  worflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install unit testing tools (criterion & gcovr)
+        run: |
+        sudo add-apt-repository ppa:snaipewastaken/ppa
+        sudo apt update && apt install criterion-dev
+
+      - name: Build
+        run: make all
