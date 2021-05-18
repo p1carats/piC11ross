@@ -24,7 +24,7 @@ int newMap(int *tab, int taille){
 int displayMap(int *tab, int taille){
 
 	for(int i = 0; i < taille * taille; i++){
-		if(i % taille == 0){
+		if(i % taille == 0 && i != 0){
 			printf("\n");
 		}
 		printf("%d", tab[i]);
