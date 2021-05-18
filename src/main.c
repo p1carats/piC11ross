@@ -13,7 +13,11 @@ int main(void){
 	newMap(tab, 10);
 	displayMap(tab, 10);
 
+	return 0;
+}
 
+
+void test(void){
 	DoubleLinkedList *list;
 	DoubleLinkedListElem *maillon;
 	DoubleLinkedListElem *maillon2;
@@ -40,8 +44,4 @@ int main(void){
 	}
 
 	printf("\n");
-
-	return 0;
 }
-
-

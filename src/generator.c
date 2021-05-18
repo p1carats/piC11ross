@@ -34,3 +34,7 @@ int displayMap(int *tab, int taille){
 
 	return 0;
 }
+
+int createHint(int *tab, int taille, DoubleLinkedList *listX, DoubleLinkedList *listY){
+	// TODO
+}
