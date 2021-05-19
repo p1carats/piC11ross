@@ -1,8 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 #include "main.h"
-#include "LinkedList.h"
+
 
 
 int main(void){
@@ -13,15 +10,18 @@ int main(void){
 	newMap(tab, 10);
 	displayMap(tab, 10);
 
-	int tab1[10] = {1, 1, 1, 0, 0, 0, 1, 0, 0, 1};
-	int tab2[10] = {0};
-	countLine(tab1, tab2, 10);
+	DoubleLinkedList *ListX;
+	DoubleLinkedList *ListY;
 
-	for (int i = 0; i < 10; i++){
-		printf("%d ", tab2[i]);
-	}
+	ListY = newDoubleLinkedList();
+	ListX = newDoubleLinkedList();
+
+	getHint(tab, 10, ListX, ListY);
 
 	printf("\n");
+
+	displayDoubleList(ListX, 10);
+
 	return 0;
 }
 

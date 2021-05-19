@@ -41,11 +41,12 @@ int displayDoubleList(DoubleLinkedList *liste, int taille){
 
 	if (liste != NULL){
 		for (int i = 0; i < liste->size; i++){
+			printf("%d) ", i);
 			for (int j = 0; j < taille; j++){
-				printf("%d) %d\n", i, elem->tab[j]);
+				printf("%d ", elem->tab[j]);
 			}
-
 			elem = elem->next;
+			printf("\n");
 		}
 		retour = 0;
 	}else{

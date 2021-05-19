@@ -7,9 +7,6 @@
 #include <stdbool.h>
 
 
-#define UP 0
-#define DOWN 1
-
 // LISTES BILATERES **************************************************
 typedef struct DoubleLinkedListElem {
 	int *tab;
