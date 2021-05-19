@@ -16,10 +16,13 @@ jobs:
       - name: Install & update libraries
         run: | 
           sudo apt-get update
-          sudo apt-get install build-essential gcc gdb valgrind
+          sudo apt-get install build-essential gcc gdb
 
       - name: Run tests
-        run: make test && ./build/test.out
+        run: |
+          make test 
+          ./build/test.out
+          make clean
       
       - name: Build project
-        run: make all
+        run: make build

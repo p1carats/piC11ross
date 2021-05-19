@@ -9,7 +9,6 @@ SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC_FILES))
 DEP_FILES := $(OBJ_FILES:.o=.d)
 
-
 TESTS_TARGET ?= test.out
 TESTS_DIR ?= ./tests
 TESTS_SRC_FILES := $(shell find $(TESTS_DIR) -name *.c)

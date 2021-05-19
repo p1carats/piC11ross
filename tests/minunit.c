@@ -1,22 +1,10 @@
 #include <stdio.h>
 #include "minunit.h"
+
+#include "check_draft.h"
  
 int tests_run = 0;
- 
-// boilerplate
-int foo = 7;
-int bar = 4;
- 
-static char * test_foo() {
-  mu_assert("error, foo != 7", foo == 7);
-  return 0;
-}
- 
-static char * test_bar() {
-  mu_assert("error, bar != 5", bar == 5);
-  return 0;
-}
- 
+
 static char * all_tests() {
   mu_run_test(test_foo);
   mu_run_test(test_bar);
@@ -28,9 +16,8 @@ int main(int argc, char **argv) {
   if (result != 0) {
     printf("%s\n", result);
   } else {
-    printf("All tests passed\n");
+    printf("All tests passed!\n");
   }
   printf("Tests run: %d\n", tests_run);
-  
   return result != 0;
 }

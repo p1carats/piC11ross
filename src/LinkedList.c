@@ -1,49 +1,44 @@
-//
-// Created by cyril on 18/05/2021.
-//
 #include "LinkedList.h"
 
-// Function which create a new Double linked list and return a pointer
-DoubleLinkedList *newDoubleLinkedList(){
+// creates a new double linked list and return a pointer
+DoubleLinkedList *newDoubleLinkedList() {
 	DoubleLinkedList *liste = (DoubleLinkedList*) malloc(sizeof(DoubleLinkedList));
-	if (liste != NULL){
+	if (liste != NULL) {
 		liste->size = 0;
 		liste->head = NULL;
 		liste->tail = NULL;
 		return liste;
-	}else{
+	} else {
 		return NULL;
 	}
 }
 
-// Function which create a Double Linked List Element. Copy value into tab
+// creates a double linked list and copy its values into tab
 DoubleLinkedListElem *newDoubleLinkedListItem(int *value, int taille){
 	DoubleLinkedListElem *maillon = (DoubleLinkedListElem*) malloc(sizeof(DoubleLinkedListElem));
-	if (maillon != NULL){
+	if (maillon != NULL) {
 		maillon->tab = malloc(sizeof(int) * taille);
-		for (int i = 0; i < taille; i++){
+		for (int i = 0; i < taille; i++) {
 			maillon->tab[i] = value[i];
 		}
-
 		maillon->next = NULL;
 		maillon->previous = NULL;
 		return maillon;
-	}else{
+	} else {
 		return NULL;
 	}
 }
 
-// Function which show a double linked list
-int displayDoubleList(DoubleLinkedList *liste, int taille){
+// shows the previous double linked list
+int displayDoubleList(DoubleLinkedList *liste, int size) {
 	DoubleLinkedListElem *elem;
 	elem = liste->head;
-	int retour = 0; // 0 : tout va bien | -1 : erreur
-
-	if (liste != NULL){
-		for (int i = 0; i < liste->size; i++){
+	int retour = 0; // everything's fine
+	if (liste != NULL) {
+		for (int i = 0; i < liste->size; i++) {
 			printf("%d) ", i);
-			for (int j = 0; j < taille; j++){
-				if (elem->tab[j] != 0){
+			for (int j = 0; j < size; j++) {
+				if (elem->tab[j] != 0) {
 					printf("%d ", elem->tab[j]);
 				}
 			}
@@ -51,53 +46,40 @@ int displayDoubleList(DoubleLinkedList *liste, int taille){
 			printf("\n");
 		}
 		retour = 0;
-	}else{
-		retour = -1;
+	} else {
+		retour = -1; // error
 	}
-
 	return retour;
 }
 
-
 // Function which insert a element into a double linked list
-int insertItemAtDoubleLinkedListTail(DoubleLinkedList *liste, DoubleLinkedListElem *newItem){
-	int retour = 0; // 0 : tout va bien | -1 : erreur
-	if (liste != NULL && newItem != NULL){ // Si les 2 éléments existent
-		if((liste->tail == NULL && liste->head == NULL) || liste->size == 0){ // Si la liste est vide
+int insertItemAtDoubleLinkedListTail(DoubleLinkedList *liste, DoubleLinkedListElem *newItem) {
+	int retour = 0; // everything's fine
+	if (liste != NULL && newItem != NULL) { // if the two elements exists
+		if ((liste->tail == NULL && liste->head == NULL) || liste->size == 0) { // if the list's empty
 			liste->size = 1;
 			liste->head = newItem;
 			liste->tail = newItem;
-
 			newItem->previous = NULL;
 			newItem->next = NULL;
-
-		}else{ // Si la liste contient déjà des choses
+		} else { // if the list isn't empty = if it already contains an item
 			newItem->previous = liste->tail;
 			newItem->next = NULL;
-
 			liste->size += 1;
-			liste->tail->next = newItem; // L'avant dernier prend le dernier en Next
+			liste->tail->next = newItem; // the second last one takes the last one in ->next
 			liste->tail = newItem;
 		}
-
 		retour = 0;
-
-	}else{
-		retour = -1; //Impossible d'ajouter
+	} else {
+		retour = -1; // error
 	}
-
 	return retour;
 }
 
-
-// Function which return the tab stored on an element
-int getValueOfDoubleLinkedListItem(DoubleLinkedListElem *item, int *valeur, int taille){
-
-	for (int i = 0; i < taille; i++){
+// returns the tab stored on an element
+int getValueOfDoubleLinkedListItem(DoubleLinkedListElem *item, int *valeur, int taille) {
+	for (int i = 0; i < taille; i++) {
 		valeur[i] = item->tab[i];
 	}
-
 	return 0;
-
 }
-

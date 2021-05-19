@@ -1,95 +1,83 @@
-//
-// Created by cyril on 18/05/2021.
-//
-
 #include "generator.h"
 
-
-// Function which create a map, need to give an empty tab and its dimension
-int newMap(int *tab, int taille){
-
-	for(int i = 0; i < taille * taille; i++){
+// creates a new map, takes as arguments an empty tab and its dimension
+int newMap(int *tab, int size) {
+	for (int i = 0; i < size * size; i++) {
 		int alea = rand() % 10;
-
-		if (alea > 5){
+		if (alea > 3) { // 2 out of 3 odds
 			tab[i] = 1;
-		}else{
+		} else {
 			tab[i] = 0;
 		}
 	}
-
 	return 0;
 }
 
-// Function which display a map, need to give a tab and its dimension
-int displayMap(int *tab, int taille){
-
-	for(int i = 0; i < taille * taille; i++){
-		if(i % taille == 0 && i != 0){
+// displays a map, takes as arguments a tab and its dimension
+int displayMap(int *tab, int size) {
+	for (int i = 0; i < size * size; i++) {
+		if (i % size == 0 && i != 0) {
 			printf("\n");
 		}
 		printf("%d", tab[i]);
 	}
-
 	printf("\n");
-
 	return 0;
 }
 
-// Function which return a tab with the number of "package", need to give 2 tab with the same dimension and the dimension
-int countLine(int *tab, int *retour, int taille){
-	int indice = 0;
-	int indiceTab = 0;
+// returns a tab with the number of "package", takes as argument two tabs (both having the same dimension)
+int countLine(int *tab, int *retour, int size) {
+	int index = 0;
+	int tabIndex = 0;
 
-	for(int i = 0; i < taille; i++){
+	for (int i = 0; i < size; i++) {
 		retour[i] = 0;
 	}
 
-	for(int i = 0; i < taille; i++){
-		if (tab[i] == 1){
-			indice++;
-		}else if(indice > 0){ // Si tab[i] == 0 et que indice > 0
-			retour[indiceTab] = indice;
-			indiceTab++;
-			indice = 0;
+	for (int i = 0; i < size; i++) {
+		if (tab[i] == 1) {
+			index++;
+		} else if(index > 0) { // only if tab[i] == 0 and index > 0
+			retour[tabIndex] = index;
+			tabIndex++;
+			index = 0;
 		}
 	}
 
-	if(indice > 0 && tab[taille - 1] == 1){
-		retour[indiceTab] = indice;
+	if (index > 0 && tab[size - 1] == 1) {
+		retour[tabIndex] = index;
 	}
 
 	return 0;
 }
 
-int getHint(int *tab, int taille, DoubleLinkedList *ListX, DoubleLinkedList *ListY){
+int getHint(int *tab, int size, DoubleLinkedList *ListX, DoubleLinkedList *ListY) {
 
-	int *tabTmp = malloc(sizeof(int) * taille);
-	int *tabReturn =  malloc(sizeof(int) * taille);
-	if (tabTmp == NULL || tabReturn == NULL){
+	int *tabTmp = malloc(sizeof(int) * size);
+	int *tabReturn =  malloc(sizeof(int) * size);
+	if (tabTmp == NULL || tabReturn == NULL) {
 		return -1;
 	}
 
-	for (int i = 0; i < taille; i++){
-		for (int j = 0; j < taille; j++){
-			tabTmp[j] = tab[j + i * 10];
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			tabTmp[j] = tab[j + i * size];
 		}
 
-		countLine(tabTmp, tabReturn, taille);
-		DoubleLinkedListElem *elem = newDoubleLinkedListItem(tabReturn, taille);
+		countLine(tabTmp, tabReturn, size);
+		DoubleLinkedListElem *elem = newDoubleLinkedListItem(tabReturn, size);
 		insertItemAtDoubleLinkedListTail(ListX, elem);
 	}
 
-	for (int i = 0; i < taille; i++){
-		for (int j = 0; j < taille; j++){
-			tabTmp[j] = tab[j*10 + i];
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			tabTmp[j] = tab[j * size + i];
 		}
 
-		countLine(tabTmp, tabReturn, taille);
-		DoubleLinkedListElem *elem = newDoubleLinkedListItem(tabReturn, taille);
+		countLine(tabTmp, tabReturn, size);
+		DoubleLinkedListElem *elem = newDoubleLinkedListItem(tabReturn, size);
 		insertItemAtDoubleLinkedListTail(ListY, elem);
 	}
 
 	return 0;
-
 }

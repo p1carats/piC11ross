@@ -1,7 +1,5 @@
 #include "main.h"
 
-
-
 int main(void){
 	srand(time(NULL));
 
@@ -26,11 +24,10 @@ int main(void){
 	return 0;
 }
 
-
 void test(void){
 	DoubleLinkedList *list;
-	DoubleLinkedListElem *maillon;
-	DoubleLinkedListElem *maillon2;
+	DoubleLinkedListElem *link1;
+	DoubleLinkedListElem *link2;
 
 	list = newDoubleLinkedList();
 	int tab2[10];
@@ -41,18 +38,17 @@ void test(void){
 		tab2[i] = i;
 	}
 
-	maillon = newDoubleLinkedListItem(tab1, 10);
-	maillon2 = newDoubleLinkedListItem(tab2, 10);
+	link1 = newDoubleLinkedListItem(tab1, 10);
+	link2 = newDoubleLinkedListItem(tab2, 10);
 
-	insertItemAtDoubleLinkedListTail(list, maillon);
-	insertItemAtDoubleLinkedListTail(list, maillon2);
+	insertItemAtDoubleLinkedListTail(list, link1);
+	insertItemAtDoubleLinkedListTail(list, link2);
 	displayDoubleList(list, 10);
-	getValueOfDoubleLinkedListItem(maillon2, tab3, 10);
+	getValueOfDoubleLinkedListItem(link2, tab3, 10);
 
 	for (int h = 0; h < 10; h++){
 		printf("%d ", tab3[h]);
 	}
 
 	printf("\n");
-
 }
