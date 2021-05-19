@@ -18,10 +18,11 @@ int main(void){
 
 	getHint(tab, 10, ListX, ListY);
 
-	printf("\n");
+	printf("\nLine :\n");
 
 	displayDoubleList(ListX, 10);
-
+	printf("Column :\n");
+	displayDoubleList(ListY, 10);
 	return 0;
 }
 
