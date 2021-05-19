@@ -24,9 +24,9 @@ This algorithm must support every generated grid, and resloves it in a human-com
 
 ## Testing
 
-Unit tests are powered by [Criterion](https://github.com/Snaipe/Criterion). Coverage testing is handled by [gcovr](https://github.com/gcovr/gcovr).
+Unit tests are powered by a custom library based on [MinUnit](http://www.jera.com/techinfo/jtns/jtn002.html).
 
-For compatibility reasons, unit tests are **only available on Linux**.
+For compatibility reasons, unit tests are **only available on Linux** for now.
 
 ## Licensing
 
