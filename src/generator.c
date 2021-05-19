@@ -3,11 +3,9 @@
 //
 
 #include "generator.h"
-#include "LinkedList.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function which create a map, need to give an empty tab and its dimension
 int newMap(int *tab, int taille){
 
 	for(int i = 0; i < taille * taille; i++){
@@ -23,7 +21,6 @@ int newMap(int *tab, int taille){
 	return 0;
 }
 
-// Function which display a map, need to give a tab and its dimension
 int displayMap(int *tab, int taille){
 
 	for(int i = 0; i < taille * taille; i++){
@@ -38,24 +35,6 @@ int displayMap(int *tab, int taille){
 	return 0;
 }
 
-// Function which return a tab with the number of "package", need to give 2 tab with the same dimension and the dimension
-int countLine(int *tab, int *retour, int taille){
-	int indice = 0;
-	int indiceTab = 0;
-
-	for(int i = 0; i < taille; i++){
-		if (tab[i] == 1){
-			indice++;
-		}else if(indice > 0){
-			retour[indiceTab] = indice;
-			indiceTab++;
-			indice = 0;
-		}
-	}
-
-	if(indice > 0){
-		retour[indiceTab] = indice;
-	}
-
-	return 0;
+int createHint(int *tab, int taille, DoubleLinkedList *listX, DoubleLinkedList *listY){
+	// TODO
 }

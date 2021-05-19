@@ -3,7 +3,7 @@
 //
 #include "LinkedList.h"
 
-// Function which create a new Double linked list and return a pointer
+// création d'une nouvelle liste chaînée bilatère vide, cette fonction renvoie un pointeur sur la nouvelle structure liste chaînée bilatère vide
 DoubleLinkedList *newDoubleLinkedList(){
 	DoubleLinkedList *liste = (DoubleLinkedList*) malloc(sizeof(DoubleLinkedList));
 	if (liste != NULL){
@@ -16,7 +16,7 @@ DoubleLinkedList *newDoubleLinkedList(){
 	}
 }
 
-// Function which create a Double Linked List Element. Copy value into tab
+// instanciation (création) d'un élément (maillon) à insérer dans une liste chaînée bilatère avec stockage de la donnée value dans l'élément de liste
 DoubleLinkedListElem *newDoubleLinkedListItem(int *value, int taille){
 	DoubleLinkedListElem *maillon = (DoubleLinkedListElem*) malloc(sizeof(DoubleLinkedListElem));
 	if (maillon != NULL){
@@ -33,7 +33,7 @@ DoubleLinkedListElem *newDoubleLinkedListItem(int *value, int taille){
 	}
 }
 
-// Function which show a double linked list
+// affichage des éléments d'une liste chaînée bilatère en commençant par la tête
 int displayDoubleList(DoubleLinkedList *liste, int taille){
 	DoubleLinkedListElem *elem;
 	elem = liste->head;
@@ -56,7 +56,7 @@ int displayDoubleList(DoubleLinkedList *liste, int taille){
 }
 
 
-// Function which insert a element into a double linked list
+// insertion d'un élément en queue de liste chaînée bilatère
 int insertItemAtDoubleLinkedListTail(DoubleLinkedList *liste, DoubleLinkedListElem *newItem){
 	int retour = 0; // 0 : tout va bien | -1 : erreur
 	if (liste != NULL && newItem != NULL){ // Si les 2 éléments existent
@@ -87,7 +87,7 @@ int insertItemAtDoubleLinkedListTail(DoubleLinkedList *liste, DoubleLinkedListEl
 }
 
 
-// Function which return the tab stored on an element
+// obtient la valeur d'un élément
 int getValueOfDoubleLinkedListItem(DoubleLinkedListElem *item, int *valeur, int taille){
 
 	for (int i = 0; i < taille; i++){

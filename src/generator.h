@@ -4,4 +4,3 @@
 
 int newMap(int *tab, int taille);
 int displayMap(int *tab, int taille);
-int countLine(int *tab, int *retour, int taille);
