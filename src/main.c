@@ -3,10 +3,10 @@
 int main(void){
 	srand(time(NULL));
 
-	int tab[100];
-
-	newMap(tab, 10);
-	displayMap(tab, 10);
+	int taille = 20;
+	int *tab = malloc(sizeof(int) * taille * taille);
+	newMap(tab, taille);
+	displayMap(tab, taille);
 
 	DoubleLinkedList *ListX;
 	DoubleLinkedList *ListY;
@@ -14,13 +14,10 @@ int main(void){
 	ListY = newDoubleLinkedList();
 	ListX = newDoubleLinkedList();
 
-	getHint(tab, 10, ListX, ListY);
+	getHint(tab, taille, ListX, ListY);
 
-	printf("\nLine :\n");
+	forPython(taille, ListX, ListY);
 
-	displayDoubleList(ListX, 10);
-	printf("Column :\n");
-	displayDoubleList(ListY, 10);
 	return 0;
 }
 
@@ -51,4 +48,13 @@ void test(void){
 	}
 
 	printf("\n");
+}
+
+void forPython(int taille, DoubleLinkedList *ListX, DoubleLinkedList *ListY){
+	printf("'''%d\n", taille);
+	printf("%d\n",taille);
+	displayDoubleListForPython(ListY, taille);
+	printf("\n");
+	displayDoubleListForPython(ListX, taille);
+	printf("'''\n");
 }

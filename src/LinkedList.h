@@ -20,3 +20,4 @@ DoubleLinkedListElem *newDoubleLinkedListItem(int *value, int taille);
 int displayDoubleList(DoubleLinkedList *liste, int taille);
 int insertItemAtDoubleLinkedListTail(DoubleLinkedList *liste, DoubleLinkedListElem *newItem);
 int getValueOfDoubleLinkedListItem(DoubleLinkedListElem *item, int *valeur, int taille);
+int displayDoubleListForPython(DoubleLinkedList *liste, int size);

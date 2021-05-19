@@ -4,3 +4,4 @@
 #include "generator.h"
 
 void test(void);
+void forPython(int taille, DoubleLinkedList *ListX, DoubleLinkedList *ListY);
