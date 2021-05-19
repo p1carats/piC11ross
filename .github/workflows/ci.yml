@@ -19,7 +19,7 @@ jobs:
           sudo apt-get install build-essential gcc gdb valgrind
 
       - name: Run tests
-        run: make test
+        run: make test && ./build/test.out
       
       - name: Build project
         run: make all

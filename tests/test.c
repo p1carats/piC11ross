@@ -3,6 +3,7 @@
  
 int tests_run = 0;
  
+// boilerplate
 int foo = 7;
 int bar = 4;
  
