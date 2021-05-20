@@ -52,6 +52,38 @@ int displayDoubleList(DoubleLinkedList *liste, int size) {
 	return retour;
 }
 
+// shows the previous double linked list with the syntax for python solving
+int displayDoubleListForPython(DoubleLinkedList *liste, int size) {
+	DoubleLinkedListElem *elem;
+	elem = liste->head;
+	int retour = 0; // everything's fine
+	if (liste != NULL) {
+		for (int i = 0; i < liste->size; i++) {
+			printf("\"");
+			for (int j = 0; j < size; j++) {
+
+				if (elem->tab[j] != 0) {
+					if (elem->tab[j + 1] != 0){
+						printf("%d,", elem->tab[j]);
+					}else{
+						printf("%d", elem->tab[j]);
+					}
+
+				}
+			}
+			elem = elem->next;
+			printf("\"");
+			if(i != liste->size - 1){
+				printf(",");
+			}
+		}
+		retour = 0;
+	} else {
+		retour = -1; // error
+	}
+	return retour;
+}
+
 // Function which insert a element into a double linked list
 int insertItemAtDoubleLinkedListTail(DoubleLinkedList *liste, DoubleLinkedListElem *newItem) {
 	int retour = 0; // everything's fine
