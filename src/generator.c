@@ -65,31 +65,23 @@ int getHint(Jeu *jeu) {
 	}
 
 	for (int i = 0; i < size; i++) {
-		int j = 0;
-
-		for (j = 0; j < size; j++) {
+		for (int j = 0; j < size; j++) {
 			tabTmp[j] = jeu->map[j + i * size];
 		}
 
 		countLine(tabTmp, tabReturn, size);
 
-		for (j = 0; j < size; j++){
-			jeu->listX[i][j] = tabReturn[j];
-		}
-
+		jeu->listX[i] = tabReturn;
 	}
 
 	for (int i = 0; i < size; i++) {
-		int j = 0;
-		for (j = 0; j < size; j++) {
+		for (int j = 0; j < size; j++) {
 			tabTmp[j] = jeu->map[j * size + i];
 		}
 
 		countLine(tabTmp, tabReturn, size);
 
-		for (j = 0; j < size; j++) {
-			jeu->listY[i][j] = tabReturn[j];
-		}
+		jeu->listY[i] = tabReturn;
 	}
 
 	return 0;
