@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-I. -g3 -Wall -W
+CFLAGS=-I. -g3 -Wall -W -g
 
 BUILD_TARGET ?= picross.exe
 BUILD_DIR ?= ./build
