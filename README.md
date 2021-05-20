@@ -17,10 +17,12 @@ This part of the project must support several key features :
  - Generate from a user-choosen image using a py script (soon) and a random-defined pattern
  - Support an unlimited number of column/lines 
 
-### Resolver
+### Solver
 
-This resolver eventually represents the hardest part of this project. This is a critical component whose able to validate and complete any Picross.
+This resolver eventually represents the hardest part of this project. This is a critical algorithm whose able to validate and complete any generated grid.
 This algorithm must support every generated grid, and resloves it in a human-comprehensive way (i.e. without cheating).
+
+Our algorithm uses bruteforce. It just tries and validates every combination until it finds a solution. Rows are stored as integer bit arrays, so iterating through candidates is just a matter of incrementing.
 
 ## Testing
 
