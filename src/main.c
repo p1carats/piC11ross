@@ -49,6 +49,7 @@ int showHint(Jeu *jeu){
 					printf("%d ", jeu->listY[i][j]);
 				}
 			}
+			printf("\n");
 		}
 
 		printf("\nIndice ligne :\n");
@@ -58,6 +59,7 @@ int showHint(Jeu *jeu){
 					printf("%d ", jeu->listX[i][j]);
 				}
 			}
+			printf("\n");
 		}
 
 		printf("\n");
