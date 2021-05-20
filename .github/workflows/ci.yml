@@ -25,4 +25,4 @@ jobs:
           make clean
       
       - name: Build project
-        run: make build
+        run: make all
