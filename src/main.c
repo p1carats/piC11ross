@@ -5,8 +5,8 @@ int main(void){
 
 	int taille = 5;
 	int *tab = malloc(sizeof(int) * taille * taille);
-	int **listX = malloc(sizeof(int) * taille);
-	int **listY = malloc(sizeof(int) * taille);
+	int **listX = malloc(sizeof(int*) * taille);
+	int **listY = malloc(sizeof(int*) * taille);
 
 	Jeu *jeu;
 	jeu = newJeu(taille, tab, listX, listY);
@@ -15,7 +15,7 @@ int main(void){
 	displayMap(jeu);
 
 	getHint(jeu);
-	//showHint(jeu);
+	showHint(jeu);
 
 
 	//forPython(taille, ListX, ListY);
@@ -51,7 +51,7 @@ int showHint(Jeu *jeu){
 			}
 		}
 
-		printf("Indice ligne :\n");
+		printf("\nIndice ligne :\n");
 		for (i = 0; i < jeu->size; i++) {
 			for (j = 0; j < jeu->size; j++) {
 				if (jeu->listX[i][j] != 0){
@@ -60,6 +60,7 @@ int showHint(Jeu *jeu){
 			}
 		}
 
+		printf("\n");
 		return 0;
 	}else{
 		return -1;
