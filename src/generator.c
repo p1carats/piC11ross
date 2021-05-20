@@ -1,25 +1,27 @@
 #include "generator.h"
 
 // creates a new map, takes as arguments an empty tab and its dimension
-int newMap(int *tab, int size) {
+int newMap(Jeu *jeu) {
+	int size = jeu->size;
 	for (int i = 0; i < size * size; i++) {
 		int alea = rand() % 10;
 		if (alea > 3) { // 2 out of 3 odds
-			tab[i] = 1;
+			jeu->map[i] = 1;
 		} else {
-			tab[i] = 0;
+			jeu->map[i] = 0;
 		}
 	}
 	return 0;
 }
 
 // displays a map, takes as arguments a tab and its dimension
-int displayMap(int *tab, int size) {
+int displayMap(Jeu *jeu) {
+	int size = jeu->size;
 	for (int i = 0; i < size * size; i++) {
 		if (i % size == 0 && i != 0) {
 			printf("\n");
 		}
-		printf("%d", tab[i]);
+		printf("%d", jeu->map[i]);
 	}
 	printf("\n");
 	return 0;
@@ -51,32 +53,43 @@ int countLine(int *tab, int *retour, int size) {
 	return 0;
 }
 
-int getHint(int *tab, int size, DoubleLinkedList *ListX, DoubleLinkedList *ListY) {
+// jeu[0] => int *tab, jeu[1] => int size, size, jeu[1] => int **listX, jeu[2] => int **listY
+int getHint(Jeu *jeu) {
 
+	int size = jeu->size;
 	int *tabTmp = malloc(sizeof(int) * size);
 	int *tabReturn =  malloc(sizeof(int) * size);
+
 	if (tabTmp == NULL || tabReturn == NULL) {
 		return -1;
 	}
 
 	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			tabTmp[j] = tab[j + i * size];
+		int j = 0;
+
+		for (j = 0; j < size; j++) {
+			tabTmp[j] = jeu->map[j + i * size];
 		}
 
 		countLine(tabTmp, tabReturn, size);
-		DoubleLinkedListElem *elem = newDoubleLinkedListItem(tabReturn, size);
-		insertItemAtDoubleLinkedListTail(ListX, elem);
+
+		for (j = 0; j < size; j++){
+			jeu->listX[i][j] = tabReturn[j];
+		}
+
 	}
 
 	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			tabTmp[j] = tab[j * size + i];
+		int j = 0;
+		for (j = 0; j < size; j++) {
+			tabTmp[j] = jeu->map[j * size + i];
 		}
 
 		countLine(tabTmp, tabReturn, size);
-		DoubleLinkedListElem *elem = newDoubleLinkedListItem(tabReturn, size);
-		insertItemAtDoubleLinkedListTail(ListY, elem);
+
+		for (j = 0; j < size; j++) {
+			jeu->listY[i][j] = tabReturn[j];
+		}
 	}
 
 	return 0;

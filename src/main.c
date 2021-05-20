@@ -3,51 +3,67 @@
 int main(void){
 	srand(time(NULL));
 
-	int taille = 20;
+	int taille = 5;
 	int *tab = malloc(sizeof(int) * taille * taille);
-	newMap(tab, taille);
-	displayMap(tab, taille);
+	int **listX = malloc(sizeof(int) * taille);
+	int **listY = malloc(sizeof(int) * taille);
 
-	DoubleLinkedList *ListX;
-	DoubleLinkedList *ListY;
+	Jeu *jeu;
+	jeu = newJeu(taille, tab, listX, listY);
 
-	ListY = newDoubleLinkedList();
-	ListX = newDoubleLinkedList();
+	newMap(jeu);
+	displayMap(jeu);
 
-	getHint(tab, taille, ListX, ListY);
+	getHint(jeu);
+	showHint(jeu);
 
-	forPython(taille, ListX, ListY);
+
+	//forPython(taille, ListX, ListY);
 
 	return 0;
 }
 
-void test(void){
-	DoubleLinkedList *list;
-	DoubleLinkedListElem *link1;
-	DoubleLinkedListElem *link2;
+Jeu* newJeu(int size, int *map, int **listX, int **listY){
+	Jeu *jeu = (Jeu*) malloc(sizeof(Jeu));
 
-	list = newDoubleLinkedList();
-	int tab2[10];
-	int tab1[10] = {0};
-	int tab3[10];
-
-	for (int i = 0; i < 10; i++){
-		tab2[i] = i;
+	if(jeu != NULL){
+		jeu->size = size;
+		jeu->map = map;
+		jeu->listX = listX;
+		jeu->listY = listY;
+		return jeu;
+	}else{
+		return NULL;
 	}
+}
 
-	link1 = newDoubleLinkedListItem(tab1, 10);
-	link2 = newDoubleLinkedListItem(tab2, 10);
+int showHint(Jeu *jeu){
+	if (jeu != NULL) {
 
-	insertItemAtDoubleLinkedListTail(list, link1);
-	insertItemAtDoubleLinkedListTail(list, link2);
-	displayDoubleList(list, 10);
-	getValueOfDoubleLinkedListItem(link2, tab3, 10);
+		int i = 0;
+		int j = 0;
+		printf("Indice colones :\n");
+		for (i = 0; i < jeu->size; i++) {
+			for (j = 0; j < jeu->size; j++) {
+				if (jeu->listY[i][j] != 0){
+					printf("%d ", jeu->listY[i][j]);
+				}
+			}
+		}
 
-	for (int h = 0; h < 10; h++){
-		printf("%d ", tab3[h]);
+		printf("Indice ligne :\n");
+		for (i = 0; i < jeu->size; i++) {
+			for (j = 0; j < jeu->size; j++) {
+				if (jeu->listX[i][j] != 0){
+					printf("%d ", jeu->listX[i][j]);
+				}
+			}
+		}
+
+		return 0;
+	}else{
+		return -1;
 	}
-
-	printf("\n");
 }
 
 void forPython(int taille, DoubleLinkedList *ListX, DoubleLinkedList *ListY){
