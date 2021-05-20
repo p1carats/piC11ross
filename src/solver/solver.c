@@ -49,7 +49,7 @@ int main(void) { // int w, int h, char row[], char cols[]
           valid = 0;
         }
       }
-    }
+    
 
     if (valid) { // is valid
       print(solution, width, height);
