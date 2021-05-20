@@ -15,7 +15,7 @@ int main(void){
 	displayMap(jeu);
 
 	getHint(jeu);
-	showHint(jeu);
+	//showHint(jeu);
 
 
 	//forPython(taille, ListX, ListY);
