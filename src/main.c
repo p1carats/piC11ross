@@ -8,6 +8,16 @@ int main(void){
 	int **listX = malloc(sizeof(int*) * taille);
 	int **listY = malloc(sizeof(int*) * taille);
 
+	int i = 0;
+
+	for (i = 0; i < taille; i++){
+		listX[i] = malloc(sizeof(int) * taille);
+	}
+
+	for (i = 0; i < taille; i++){
+		listY[i] = malloc(sizeof(int) * taille);
+	}
+
 	Jeu *jeu;
 	jeu = newJeu(taille, tab, listX, listY);
 
@@ -26,13 +36,17 @@ int main(void){
 Jeu* newJeu(int size, int *map, int **listX, int **listY){
 	Jeu *jeu = (Jeu*) malloc(sizeof(Jeu));
 
-	if(jeu != NULL){
+	if (jeu != NULL){
+
 		jeu->size = size;
 		jeu->map = map;
 		jeu->listX = listX;
 		jeu->listY = listY;
+
 		return jeu;
+
 	}else{
+
 		return NULL;
 	}
 }
@@ -40,23 +54,24 @@ Jeu* newJeu(int size, int *map, int **listX, int **listY){
 int showHint(Jeu *jeu){
 	if (jeu != NULL) {
 
-		int i = 0;
-		int j = 0;
+		int i;
+		int j;
+
+		printf("\nIndice ligne :\n");
+		for (i = 0; i < jeu->size; i++) {
+
+			for (j = 0; j < jeu->size; j++) {
+				printf("%d ", jeu->listX[i][j]);
+			}
+
+			printf("\n");
+		}
+
 		printf("Indice colones :\n");
 		for (i = 0; i < jeu->size; i++) {
 			for (j = 0; j < jeu->size; j++) {
 				if (jeu->listY[i][j] != 0){
 					printf("%d ", jeu->listY[i][j]);
-				}
-			}
-			printf("\n");
-		}
-
-		printf("\nIndice ligne :\n");
-		for (i = 0; i < jeu->size; i++) {
-			for (j = 0; j < jeu->size; j++) {
-				if (jeu->listX[i][j] != 0){
-					printf("%d ", jeu->listX[i][j]);
 				}
 			}
 			printf("\n");
