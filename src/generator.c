@@ -57,6 +57,7 @@ int countLine(int *tab, int *retour, int size) {
 int getHint(Jeu *jeu) {
 
 	int size = jeu->size;
+
 	int *tabTmp = malloc(sizeof(int) * size);
 	int *tabReturn =  malloc(sizeof(int) * size);
 
@@ -67,18 +68,21 @@ int getHint(Jeu *jeu) {
 	for (int i = 0; i < size; i++) {
 		int j;
 
+		*tabReturn = 0;
+		*tabTmp = 0;
+
 		for (j = 0; j < size; j++) {
 			tabTmp[j] = jeu->map[j + i * size];
 		}
 
 		countLine(tabTmp, tabReturn, size);
+		jeu->listX[i] = tabReturn;
 
 		for(j = 0; j < size; j++){
 			// Le tableau tabReturn marche
 			printf("%d ", tabReturn[j]);
 		}
-
-		jeu->listX[i] = tabReturn;
+		printf("\n");
 	}
 
 	printf("\n");
@@ -90,10 +94,11 @@ int getHint(Jeu *jeu) {
 		}
 
 		countLine(tabTmp, tabReturn, size);
+		jeu->listY[i] = tabReturn;
 
 		for(j = 0; j < size; j++){
 			// Le tableau tabReturn marche
-			printf("%d ", tabReturn[j]);
+			//printf("%d ", tabReturn[j]);
 		}
 	}
 

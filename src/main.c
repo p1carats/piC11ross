@@ -8,14 +8,14 @@ int main(void){
 	int **listX = malloc(sizeof(int*) * taille);
 	int **listY = malloc(sizeof(int*) * taille);
 
-	int i = 0;
+	int i;
 
 	for (i = 0; i < taille; i++){
-		listX[i] = malloc(sizeof(int) * taille);
+		listX[i] = malloc(sizeof(int*) * taille);
 	}
 
 	for (i = 0; i < taille; i++){
-		listY[i] = malloc(sizeof(int) * taille);
+		listY[i] = malloc(sizeof(int*) * taille);
 	}
 
 	Jeu *jeu;
@@ -52,32 +52,17 @@ Jeu* newJeu(int size, int *map, int **listX, int **listY){
 }
 
 int showHint(Jeu *jeu){
-	if (jeu != NULL) {
+	if (jeu != NULL){
 
-		int i;
-		int j;
+		for(int i = 0; i < jeu->size; i++){
 
-		printf("\nIndice ligne :\n");
-		for (i = 0; i < jeu->size; i++) {
-
-			for (j = 0; j < jeu->size; j++) {
+			for(int j = 0; j < jeu->size; j++){
 				printf("%d ", jeu->listX[i][j]);
 			}
 
 			printf("\n");
 		}
 
-		printf("Indice colones :\n");
-		for (i = 0; i < jeu->size; i++) {
-			for (j = 0; j < jeu->size; j++) {
-				if (jeu->listY[i][j] != 0){
-					printf("%d ", jeu->listY[i][j]);
-				}
-			}
-			printf("\n");
-		}
-
-		printf("\n");
 		return 0;
 	}else{
 		return -1;
@@ -92,3 +77,5 @@ void forPython(int taille, DoubleLinkedList *ListX, DoubleLinkedList *ListY){
 	displayDoubleListForPython(ListX, taille);
 	printf("'''\n");
 }
+
+//test
