@@ -1,5 +1,24 @@
 #include "generator.h"
 
+// creates a new structure Jeu with 4 arguments : size, map, listX and listY
+Jeu* newJeu(int size, int *map, int **listX, int **listY){
+	Jeu *jeu = (Jeu*) malloc(sizeof(Jeu));
+
+	if (jeu != NULL){
+
+		jeu->size = size;
+		jeu->map = map;
+		jeu->listX = listX;
+		jeu->listY = listY;
+
+		return jeu;
+
+	}else{
+
+		return NULL;
+	}
+}
+
 // creates a new map, takes as arguments an empty tab and its dimension
 int newMap(Jeu *jeu) {
 	int size = jeu->size;
@@ -11,6 +30,16 @@ int newMap(Jeu *jeu) {
 			jeu->map[i] = 0;
 		}
 	}
+
+	for(int i = 0; i < jeu->size; i++){
+		jeu->listX[i] = malloc(sizeof(int) * jeu->size);
+		jeu->listY[i] = malloc(sizeof(int) * jeu->size);
+
+		if (jeu->listX[i] == NULL || jeu->listY[i] == NULL){
+			return -1;
+		}
+	}
+
 	return 0;
 }
 
@@ -53,49 +82,77 @@ int countLine(int *tab, int *retour, int size) {
 	return 0;
 }
 
-// jeu[0] => int *tab, jeu[1] => int size, size, jeu[1] => int **listX, jeu[2] => int **listY
+// Assign to listX and listY their values
 int getHint(Jeu *jeu) {
 
-	int size = jeu->size;
-	int *tabTmp = malloc(sizeof(int) * size);
-	int *tabReturn =  malloc(sizeof(int) * size);
+	int *tabTmp = malloc(sizeof(int) * jeu->size);
+	int *tabReturn =  malloc(sizeof(int) * jeu->size);
 
 	if (tabTmp == NULL || tabReturn == NULL) {
 		return -1;
 	}
 
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < jeu->size; i++) {
 		int j;
 
-		for (j = 0; j < size; j++) {
-			tabTmp[j] = jeu->map[j + i * size];
+		*tabReturn = 0;
+		*tabTmp = 0;
+
+		for (j = 0; j < jeu->size; j++) {
+			tabTmp[j] = jeu->map[j + i * jeu->size];
 		}
 
-		countLine(tabTmp, tabReturn, size);
+		countLine(tabTmp, tabReturn, jeu->size);
 
-		for(j = 0; j < size; j++){
-			// Le tableau tabReturn marche
-			printf("%d ", tabReturn[j]);
+		for(j = 0; j < jeu->size; j++){
+			jeu->listX[i][j] = tabReturn[j];
 		}
 
-		jeu->listX[i] = tabReturn;
 	}
 
 	printf("\n");
 
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < jeu->size; i++) {
 		int j = 0;
-		for (j = 0; j < size; j++) {
-			tabTmp[j] = jeu->map[j * size + i];
+		for (j = 0; j < jeu->size; j++) {
+			tabTmp[j] = jeu->map[j * jeu->size + i];
 		}
 
-		countLine(tabTmp, tabReturn, size);
+		countLine(tabTmp, tabReturn, jeu->size);
 
-		for(j = 0; j < size; j++){
-			// Le tableau tabReturn marche
-			printf("%d ", tabReturn[j]);
+		for(j = 0; j < jeu->size; j++){
+			jeu->listY[i][j] = tabReturn[j];
 		}
+
+	}
+
+	free(tabTmp);
+	free(tabReturn);
+
+	return 0;
+}
+
+// show values of listX and listY (for debugging)
+int showHint(Jeu *jeu){
+	if (jeu == NULL) {
+		return -1;
+	}
+
+	for(int i = 0; i < jeu->size; i++){
+		for(int j = 0; j < jeu->size; j++){
+			printf("%d ", jeu->listX[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n_______________________________________________\n\n");
+
+	for(int i = 0; i < jeu->size; i++){
+		for(int j = 0; j < jeu->size; j++){
+			printf("%d ", jeu->listY[i][j]);
+		}
+		printf("\n");
 	}
 
 	return 0;
+
 }
