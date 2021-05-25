@@ -21,16 +21,14 @@ int main(void){
 	int *tableau = malloc(sizeof(int) * jeu->size * jeu->size);
 	int *pos = malloc(sizeof(int) * 2);
 
-	for (int i = 0; i < jeu->size; i++){
-		tableau[i] = jeu->map[i];
-		if (i % 5 == 3){
-			if (tableau[i] == 1) {
-				tableau[i] = 0;
-			}else{
-				tableau[i] = 1;
-			}
-		}
+	for (int i = 0; i < jeu->size * jeu->size; i++) {
+		tableau[i] = 0;
 	}
+
+	tableau[0] = 1;
+	tableau[1] = 1;
+	tableau[2] = 1;
+	tableau[3] = 1;
 
 	pos[0] = 0;
 	pos[1] = 3;
