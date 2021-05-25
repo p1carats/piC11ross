@@ -14,3 +14,4 @@ int displayMap(Jeu *jeu);
 int countLine(int *tab, int *retour, int size);
 int getHint(Jeu *jeu);
 int showHint(Jeu *jeu);
+int createFile(Jeu *jeu, char* nom);

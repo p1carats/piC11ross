@@ -50,7 +50,11 @@ int displayMap(Jeu *jeu) {
 		if (i % size == 0 && i != 0) {
 			printf("\n");
 		}
-		printf("%d", jeu->map[i]);
+		if (jeu->map[i] == 1){
+			printf("#");
+		}else{
+			printf("-");
+		}
 	}
 	printf("\n");
 	return 0;
@@ -140,7 +144,9 @@ int showHint(Jeu *jeu){
 
 	for(int i = 0; i < jeu->size; i++){
 		for(int j = 0; j < jeu->size; j++){
-			printf("%d ", jeu->listX[i][j]);
+			if (jeu->listX[i][j] != 0){
+				printf("%d ", jeu->listX[i][j]);
+			}
 		}
 		printf("\n");
 	}
@@ -148,11 +154,67 @@ int showHint(Jeu *jeu){
 
 	for(int i = 0; i < jeu->size; i++){
 		for(int j = 0; j < jeu->size; j++){
-			printf("%d ", jeu->listY[i][j]);
+			if (jeu->listY[i][j] != 0){
+				printf("%d ", jeu->listY[i][j]);
+			}
 		}
 		printf("\n");
 	}
 
 	return 0;
 
+}
+
+int createFile(Jeu *jeu, char nom[16]){
+
+	FILE *file;
+	char buffer[16] = {0};
+	file = fopen(nom, "w");
+
+	sprintf(buffer, "%d", jeu->size);
+	fputs(buffer, file);
+	fputs(" ", file);
+	fputs(buffer, file);
+
+	fputs("\n\n", file);
+
+	for (int i = 0; i < jeu->size; i++){
+		for (int j = 0; j < jeu->size; j++){
+			if (jeu->listX[i][j] != 0){
+				sprintf(buffer, "%d", jeu->listX[i][j]);
+				fputs(buffer, file);
+			}
+
+			if (j + 1 < jeu->size){
+				if (jeu->listX[i][j+1]){
+					fputs(" ", file);
+				}
+			}
+		}
+
+		fputs("\n", file);
+
+	}
+
+	fputs("\n\n", file);
+
+	for (int i = 0; i < jeu->size; i++){
+		for (int j = 0; j < jeu->size; j++){
+			if (jeu->listY[i][j] != 0){
+				sprintf(buffer, "%d", jeu->listY[i][j]);
+				fputs(buffer, file);
+			}
+
+			if (j + 1 < jeu->size){
+				if (jeu->listY[i][j+1]){
+					fputs(" ", file);
+				}
+			}
+		}
+
+		fputs("\n", file);
+	}
+
+	fclose(file);
+	return 0;
 }

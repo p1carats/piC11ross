@@ -16,7 +16,7 @@ int main(void){
 
 	getHint(jeu);
 	showHint(jeu);
-
+	createFile(jeu, "bite.txt");
 
 	return 0;
 }
