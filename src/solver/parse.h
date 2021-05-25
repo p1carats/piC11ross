@@ -1,1 +1,0 @@
-static void parse_runs(int runs[][SIZE_MAX / 2], int nruns[], char *line);

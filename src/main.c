@@ -18,5 +18,7 @@ int main(void){
 	showHint(jeu);
 	createFile(jeu, "bite.txt");
 
+	test();
+
 	return 0;
 }

@@ -1,1 +1,0 @@
-static int count_runs(unsigned long x, int *r);

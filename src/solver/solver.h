@@ -1,1 +1,0 @@
-#define SIZE_MAX 32
