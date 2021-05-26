@@ -246,8 +246,6 @@ int readFile(Jeu *jeu, char *name){
 
 	// Lecture de la taille
 	fscanf(file, "%s", buffer);
-	printf("%s\n", buffer);
-
 	char nb[2] = {0};
 
 	while(buffer[i] != ';'){
@@ -256,13 +254,19 @@ int readFile(Jeu *jeu, char *name){
 	}
 
 	sscanf(nb, "%d", &size);
-
-	printf("%d", size);
-
-
-	printf("\n%s\n", nb);
+	jeu->size = size;
 
 	fscanf(file, "%s", buffer);
+
+	char **array = malloc(sizeof(char*) * size * size);
+
+	for (int p = 0; p < size * size; p++){
+		array[p] = malloc(sizeof(char) * size * size);
+	}
+
+	convertCharToArray(buffer, ';', array, size*size);
+	convertArrayToInt(array, ',', jeu->listX, size*size);
+
 	printf("%s\n", buffer);
 
 	fscanf(file, "%s", buffer);
