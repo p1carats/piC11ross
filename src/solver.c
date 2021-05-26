@@ -5,16 +5,9 @@ int checkGrid(Jeu *jeu, int *tab, int *pos){
 		return -1;
 	}
 
-	if (pos[0] == (jeu->size - 1) && (pos[1] == (jeu->size - 1))){ // If pos is at the end
-		for (int i = 0; i < jeu->size; i++){
-			if (jeu->map[i] != tab[i]){
-				return -2;
-			}
-		}
-	}
+	// Si la case est noire, on peut admettre que la taille soit inferieur ou égale
 
 	// Verifie la ligne :
-
 	// Verifie la cohérence de la ligne si on est en bout de ligne
 	if (pos[1] == (jeu->size - 1)){
 
@@ -30,7 +23,7 @@ int checkGrid(Jeu *jeu, int *tab, int *pos){
 
 		for (i = 0; i < jeu->size; i++){
 			if (hintTmp[i] != jeu->listX[pos[0]][i]){
-				return -3;
+				return -2;
 			}
 		}
 	}

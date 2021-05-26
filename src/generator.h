@@ -15,3 +15,5 @@ int countLine(int *tab, int *retour, int size);
 int getHint(Jeu *jeu);
 int showHint(Jeu *jeu);
 int createFile(Jeu *jeu, char* nom);
+int readFile(Jeu *jeu, char* name);
+int convertCharToArray(char *buffer, char separator, char **array);

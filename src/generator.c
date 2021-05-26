@@ -165,56 +165,146 @@ int showHint(Jeu *jeu){
 
 }
 
-int createFile(Jeu *jeu, char nom[16]){
+int createFile(Jeu *jeu, char name[16]){
 
 	FILE *file;
 	char buffer[16] = {0};
-	file = fopen(nom, "w");
+	file = fopen(name, "w");
+	int i,j;
 
+	// On ecrit la taille
 	sprintf(buffer, "%d", jeu->size);
 	fputs(buffer, file);
-	fputs(" ", file);
+	fputs(";", file);
 	fputs(buffer, file);
 
-	fputs("\n\n", file);
+	fputs("\n", file);
 
-	for (int i = 0; i < jeu->size; i++){
-		for (int j = 0; j < jeu->size; j++){
-			if (jeu->listX[i][j] != 0){
+	// On ecrit la liste X
+	for (i = 0; i < jeu->size; i++){
+		for (j = 0; j < jeu->size; j++){
+			if (jeu->listX[i][j] != 0 || j == 0){
 				sprintf(buffer, "%d", jeu->listX[i][j]);
 				fputs(buffer, file);
 			}
 
 			if (j + 1 < jeu->size){
 				if (jeu->listX[i][j+1]){
-					fputs(" ", file);
+					fputs(",", file);
 				}
 			}
 		}
-
-		fputs("\n", file);
+		if (i < jeu->size - 1) {
+			fputs(";", file);
+		}
 
 	}
 
-	fputs("\n\n", file);
+	fputs("\n", file);
 
-	for (int i = 0; i < jeu->size; i++){
-		for (int j = 0; j < jeu->size; j++){
-			if (jeu->listY[i][j] != 0){
+	// On ecrit la liste Y
+	for (i = 0; i < jeu->size; i++){
+		for (j = 0; j < jeu->size; j++){
+			if (jeu->listY[i][j] != 0 || j == 0){
 				sprintf(buffer, "%d", jeu->listY[i][j]);
 				fputs(buffer, file);
 			}
 
 			if (j + 1 < jeu->size){
 				if (jeu->listY[i][j+1]){
-					fputs(" ", file);
+					fputs(",", file);
 				}
 			}
 		}
 
-		fputs("\n", file);
+		if (i < jeu->size - 1) {
+			fputs(";", file);
+		}
+	}
+
+	fputs("\n", file);
+
+	// On ecrit la map
+	for (i = 0; i < jeu->size; i++){
+		for (j = 0; j < jeu->size; j++){
+			sprintf(buffer, "%d", jeu->map[i * jeu->size + j]);
+			fputs(buffer, file);
+		}
+
+		if (i < jeu->size - 1) {
+			fputs("\n", file);
+		}
+
 	}
 
 	fclose(file);
+	return 0;
+}
+
+int readFile(Jeu *jeu, char *name){
+
+	FILE *file;
+	char buffer[255] = {0};
+	file = fopen(name, "r");
+	int i = 0;
+	int size;
+
+	// Lecture de la taille
+	fscanf(file, "%s", buffer);
+	printf("%s\n", buffer);
+
+	char nb[2] = {0};
+
+	while(buffer[i] != ';'){
+		nb[i] = buffer[i];
+		i++;
+	}
+
+	sscanf(nb, "%d", &size);
+
+	printf("%d", size);
+
+
+	printf("\n%s\n", nb);
+
+	fscanf(file, "%s", buffer);
+	printf("%s\n", buffer);
+
+	fscanf(file, "%s", buffer);
+	printf("%s\n", buffer);
+
+	return 0;
+
+}
+
+int convertCharToArray(char *buffer, char separator, char **array){
+
+	int i = 0;
+	int j;
+	int index = 0;
+	char *elem = malloc(sizeof(char) * 50);
+
+	while (buffer[i] != '\0') {
+
+		for (j = 0; j < 50; j++){
+			elem[j] = 0;
+		}
+
+		int p = 0;
+		while (buffer[i] != separator && buffer[i] != '\0') {
+			elem[p] = buffer[i];
+			p++;
+			i++;
+		}
+
+		for (j = 0; j < 50; j++){
+			array[index][j] = elem[j];
+		}
+
+		index++;
+		i++;
+	}
+
+	free(elem);
 	return 0;
 }
