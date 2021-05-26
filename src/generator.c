@@ -230,11 +230,6 @@ int createFile(Jeu *jeu, char name[16]){
 			sprintf(buffer, "%d", jeu->map[i * jeu->size + j]);
 			fputs(buffer, file);
 		}
-
-		if (i < jeu->size - 1) {
-			fputs("\n", file);
-		}
-
 	}
 
 	fclose(file);
@@ -277,16 +272,16 @@ int readFile(Jeu *jeu, char *name){
 
 }
 
-int convertCharToArray(char *buffer, char separator, char **array){
+int convertCharToArray(char *buffer, char separator, char **array, int size){
 
 	int i = 0;
 	int j;
 	int index = 0;
-	char *elem = malloc(sizeof(char) * 50);
+	char *elem = malloc(sizeof(char) * size);
 
 	while (buffer[i] != '\0') {
 
-		for (j = 0; j < 50; j++){
+		for (j = 0; j < size; j++){
 			elem[j] = 0;
 		}
 
@@ -297,7 +292,7 @@ int convertCharToArray(char *buffer, char separator, char **array){
 			i++;
 		}
 
-		for (j = 0; j < 50; j++){
+		for (j = 0; j < size; j++){
 			array[index][j] = elem[j];
 		}
 
@@ -306,5 +301,48 @@ int convertCharToArray(char *buffer, char separator, char **array){
 	}
 
 	free(elem);
+	return 0;
+}
+
+int convertArrayToInt(char **array, char separator, int **retour, int size){
+
+	char *buffer = malloc(sizeof(char) * size);
+
+	int i;
+
+	for (i = 0; i < size; i++){ // Boucle pour chaque tableau
+
+		int j;
+		// Recuperation de la ligne sous la forme "3,2,1"
+		for (j = 0; j < size; j++){
+			buffer[j] = array[i][j];
+		}
+
+		int index = 0;
+		j = 0;
+		int p = 0;
+		char *nb = malloc(sizeof(char) * size);
+
+		// Transformation de la ligne en int
+		while (buffer[j] != '\0') {
+
+			index = 0;
+
+			for (int q = 0; q < size; q++){
+				nb[q] = 0;
+			}
+
+			while (buffer[j] != separator && buffer[j] != '\0') {
+				nb[index] = buffer[j];
+				index++;
+				j++;
+			}
+
+			sscanf(nb, "%d", &retour[i][p]);
+			p++;
+			j++;
+		}
+	}
+
 	return 0;
 }

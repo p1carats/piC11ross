@@ -9,10 +9,12 @@ int main(void){
 	int **listX = malloc(sizeof(int*) * taille);
 	int **listY = malloc(sizeof(int*) * taille);
 
-	char **test = malloc(sizeof(char*) * 5);
+	char **test = malloc(sizeof(char*) * 10);
+	int **valeur = malloc(sizeof(int*) * 10);
 
-	for (int p = 0; p < 5; p++){
-		test[p] = malloc(sizeof(char) * 50);
+	for (int p = 0; p < 10; p++){
+		test[p] = malloc(sizeof(char) * 10);
+		valeur[p] = malloc(sizeof(int) * 10);
 	}
 
 	Jeu *jeu;
@@ -45,16 +47,12 @@ int main(void){
 
 	readFile(jeu, "db.txt");
 
-	char buffer[250] = {"2,2,2;4,2;1;1;4"};
+	char buffer[250] = {"2,2,2,3;4,2;1;1;4"};
 
-	convertCharToArray(buffer, ';', test);
+	convertCharToArray(buffer, ';', test, 10);
+	convertArrayToInt(test, ',', valeur, 10);
 
-	printf("ici : %s\n", test[0]);
-	printf("ici : %s\n", test[1]);
-	printf("ici : %s\n", test[2]);
-	printf("ici : %s\n", test[3]);
-	printf("ici : %s\n", test[4]);
-
+	printf("ici : %d\n", valeur[0][9]);
 
 	return 0;
 }
