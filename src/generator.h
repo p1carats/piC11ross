@@ -18,3 +18,4 @@ int createFile(Jeu *jeu, char* nom);
 int readFile(Jeu *jeu, char* name);
 int convertCharToArray(char *buffer, char separator, char **array, int size);
 int convertArrayToInt(char **array, char separator, int **retour, int size);
+int checkHint(Jeu *jeu);

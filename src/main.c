@@ -30,7 +30,9 @@ int main(void){
 
 	//createFile(jeu, "db.txt");
 	readFile(jeu, "db.txt");
-    displayMap(jeu);
+    showHint(jeu);
+    printf("%d\n", checkHint(jeu));
+
 
     free(tab);
     for (int i = 0; i < taille; i++){

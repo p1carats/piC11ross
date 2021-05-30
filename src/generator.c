@@ -114,8 +114,6 @@ int getHint(Jeu *jeu) {
 
 	}
 
-	printf("\n");
-
 	for (int i = 0; i < jeu->size; i++) {
 		int j = 0;
 		for (j = 0; j < jeu->size; j++) {
@@ -378,4 +376,47 @@ int convertArrayToInt(char **array, char separator, int **retour, int size){
 
     free(buffer);
 	return 0;
+}
+
+int checkHint(Jeu *jeu){
+
+    int retour = 0;
+
+    int *tabTmp = malloc(sizeof(int) * jeu->size);
+    int *hintTmp = malloc(sizeof(int) * jeu->size);
+
+    for (int i = 0; i < jeu->size; i++){
+        int j;
+        // Pour les X
+        for (j = 0; j < jeu->size; j++){
+            tabTmp[j] = jeu->map[i * jeu->size + j];
+        }
+
+        countLine(tabTmp, hintTmp, jeu->size);
+
+        for (j = 0; j < jeu->size; j++){
+            if (hintTmp[j] != jeu->listX[i][j]){
+                retour = -1;
+            }
+        }
+
+        // Pour les Y
+
+        for (j = 0; j < jeu->size; j++){
+            tabTmp[j] = jeu->map[jeu->size * j + i];
+        }
+
+        countLine(tabTmp, hintTmp, jeu->size);
+
+        for (j = 0; j < jeu->size; j++){
+            if (hintTmp[j] != jeu->listY[i][j]){
+                retour = -1;
+            }
+        }
+
+    }
+
+    free(tabTmp);
+    free(hintTmp);
+    return retour;
 }
