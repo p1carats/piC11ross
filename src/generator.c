@@ -11,6 +11,15 @@ Jeu* newJeu(int size, int *map, int **listX, int **listY){
 		jeu->listX = listX;
 		jeu->listY = listY;
 
+        for(int i = 0; i < jeu->size; i++){
+            jeu->listX[i] = malloc(sizeof(int) * jeu->size);
+            jeu->listY[i] = malloc(sizeof(int) * jeu->size);
+
+            if (jeu->listX[i] == NULL || jeu->listY[i] == NULL){
+                return NULL;
+            }
+        }
+
 		return jeu;
 
 	}else{
@@ -28,15 +37,6 @@ int newMap(Jeu *jeu) {
 			jeu->map[i] = 1;
 		} else {
 			jeu->map[i] = 0;
-		}
-	}
-
-	for(int i = 0; i < jeu->size; i++){
-		jeu->listX[i] = malloc(sizeof(int) * jeu->size);
-		jeu->listY[i] = malloc(sizeof(int) * jeu->size);
-
-		if (jeu->listX[i] == NULL || jeu->listY[i] == NULL){
-			return -1;
 		}
 	}
 
@@ -236,10 +236,10 @@ int createFile(Jeu *jeu, char name[16]){
 	return 0;
 }
 
-int readFile(Jeu *jeu, char *name){
+int readFile(Jeu *jeu, char *name){ // On ne peut pas lire des map de plus de 30*30
 
 	FILE *file;
-	char buffer[255] = {0};
+	char buffer[1000] = {0};
 	file = fopen(name, "r");
 	int i = 0;
 	int size;
@@ -256,22 +256,48 @@ int readFile(Jeu *jeu, char *name){
 	sscanf(nb, "%d", &size);
 	jeu->size = size;
 
-	fscanf(file, "%s", buffer);
-
-	char **array = malloc(sizeof(char*) * size * size);
-
-	for (int p = 0; p < size * size; p++){
-		array[p] = malloc(sizeof(char) * size * size);
+	if (jeu->size > 30){ // Cas d'une map trop grande
+	    jeu->size = 0;
+	    jeu->listX = NULL;
+	    jeu->listY = NULL;
+	    jeu->map = 0;
+        return -1;
 	}
 
-	convertCharToArray(buffer, ';', array, size*size);
-	convertArrayToInt(array, ',', jeu->listX, size*size);
+    char **array = malloc(sizeof(char*) * size);
 
-	printf("%s\n", buffer);
+    for (int p = 0; p < size; p++){
+        array[p] = malloc(sizeof(char) * size * size);
+    }
 
+    // On lit la listX
 	fscanf(file, "%s", buffer);
-	printf("%s\n", buffer);
+	convertCharToArray(buffer, ';', array, size);
+	convertArrayToInt(array, ',', jeu->listX, size);
 
+	// On lit la listY
+	fscanf(file, "%s", buffer);
+    convertCharToArray(buffer, ';', array, size);
+    convertArrayToInt(array, ',', jeu->listY, size);
+
+    // On lit la map
+    fscanf(file, "%s", buffer);
+    convertCharToArray(buffer, ';', array, size*size);
+
+    for(i = 0; i < size * size; i++){
+        if (array[0][i] == 48){
+            jeu->map[i] = 0;
+        }else if (array[0][i] == 49){
+            jeu->map[i] = 1;
+        }
+    }
+
+	for (i = 0; i < size; i++){
+        free(array[i]);
+	}
+
+    free(array);
+    fclose(file);
 	return 0;
 
 }
@@ -312,6 +338,7 @@ int convertArrayToInt(char **array, char separator, int **retour, int size){
 
 	char *buffer = malloc(sizeof(char) * size);
 
+
 	int i;
 
 	for (i = 0; i < size; i++){ // Boucle pour chaque tableau
@@ -322,31 +349,33 @@ int convertArrayToInt(char **array, char separator, int **retour, int size){
 			buffer[j] = array[i][j];
 		}
 
-		int index = 0;
+		int index;
 		j = 0;
 		int p = 0;
-		char *nb = malloc(sizeof(char) * size);
+		char *nb = malloc(sizeof(char) * size * size);
 
 		// Transformation de la ligne en int
 		while (buffer[j] != '\0') {
 
 			index = 0;
 
-			for (int q = 0; q < size; q++){
+			for (int q = 0; q < size*size; q++){
 				nb[q] = 0;
 			}
 
 			while (buffer[j] != separator && buffer[j] != '\0') {
 				nb[index] = buffer[j];
-				index++;
+                index++;
 				j++;
 			}
 
 			sscanf(nb, "%d", &retour[i][p]);
+
 			p++;
 			j++;
 		}
 	}
 
+    free(buffer);
 	return 0;
 }

@@ -26,7 +26,12 @@ int checkGrid(Jeu *jeu, int *tab, int *pos){
 				return -2;
 			}
 		}
+
+        free(tabTmp);
+        free(hintTmp);
 	}
+
+
 
 	// get hints of pose
 	int *tabHint = malloc(sizeof(int) * jeu->size);
@@ -53,6 +58,8 @@ int checkGrid(Jeu *jeu, int *tab, int *pos){
 	if (nbEnCours > nb){
 		return -4;
 	}
+
+    free(tabHint);
 
 	// Verifie le nombre de 1 dans le groupe actuel
 
@@ -109,6 +116,9 @@ int checkGrid(Jeu *jeu, int *tab, int *pos){
 	if (nbEnCours > nb){
 		return -6;
 	}
+
+    free(tabHint);
+    free(hintTmp);
 
 
 

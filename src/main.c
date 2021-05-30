@@ -20,23 +20,31 @@ int main(void){
 	Jeu *jeu;
 	jeu = newJeu(taille, tab, listX, listY);
 
-	newMap(jeu);
-	getHint(jeu);
+	//newMap(jeu);
+	//getHint(jeu);
 
 	//displayMap(jeu);
 	//showHint(jeu);
 
 	//printf("\n");
 
-	createFile(jeu, "db.txt");
+	//createFile(jeu, "db.txt");
 	readFile(jeu, "db.txt");
+    displayMap(jeu);
 
-	//char buffer[250] = {"2,2,2,3;4,2;1;1;4"};
+    free(tab);
+    for (int i = 0; i < taille; i++){
+        free(listX[i]);
+        free(listY[i]);
+        free(valeur[i]);
+        free(test[i]);
+    }
 
-	//convertCharToArray(buffer, ';', test, 10);
-	//convertArrayToInt(test, ',', valeur, 10);
-
-	//printf("ici : %d\n", valeur[0][9]);
+    free(listX);
+    free(listY);
+    free(valeur);
+    free(test);
+    free(jeu);
 
 	return 0;
 }
