@@ -76,7 +76,7 @@ int countLine(int *tab, int *retour, int size) {
   return 0;
 }
 
-// aggisn to listX and listY their values
+// assign to listX and listY their values
 int getHint(Game *picross) {
   int *tabTmp = malloc(sizeof(int) * picross->size);
   int *tabReturn =  malloc(sizeof(int) * picross->size);
@@ -151,7 +151,7 @@ int createFile(Game *picross, char name[16]){
 	file = fopen(name, "w");
 	int i,j;
 
-	// On ecrit la taille
+	// write the size
 	sprintf(buffer, "%d", picross->size);
 	fputs(buffer, file);
 	fputs(";", file);
@@ -159,7 +159,7 @@ int createFile(Game *picross, char name[16]){
 
 	fputs("\n", file);
 
-	// On ecrit la liste X
+	// write listX
 	for (i = 0; i < picross->size; i++){
 		for (j = 0; j < picross->size; j++){
 			if (picross->listX[i][j] != 0 || j == 0){
@@ -181,7 +181,7 @@ int createFile(Game *picross, char name[16]){
 
 	fputs("\n", file);
 
-	// On ecrit la liste Y
+	// write listY
 	for (i = 0; i < picross->size; i++){
 		for (j = 0; j < picross->size; j++){
 			if (picross->listY[i][j] != 0 || j == 0){
@@ -203,7 +203,7 @@ int createFile(Game *picross, char name[16]){
 
 	fputs("\n", file);
 
-	// On ecrit la map
+	// write the map
 	for (i = 0; i < picross->size; i++){
 		for (j = 0; j < picross->size; j++){
 			sprintf(buffer, "%d", picross->map[i * picross->size + j]);
@@ -215,7 +215,7 @@ int createFile(Game *picross, char name[16]){
 	return 0;
 }
 
-int readFile(Game *picross, char *name) { // On ne peut pas lire des map de plus de 30*30
+int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (hard-limit)
 
 	FILE *file;
 	char buffer[1000] = {0};
@@ -223,7 +223,7 @@ int readFile(Game *picross, char *name) { // On ne peut pas lire des map de plus
 	int i = 0;
 	int size;
 
-	// Lecture de la taille
+	// size reading
 	fscanf(file, "%s", buffer);
 	char nb[2] = {0};
 
@@ -235,7 +235,7 @@ int readFile(Game *picross, char *name) { // On ne peut pas lire des map de plus
 	sscanf(nb, "%d", &size);
 	picross->size = size;
 
-	if (picross->size > 30){ // Cas d'une map trop grande
+	if (picross->size > 30){ // if the map is too large
 	    picross->size = 0;
 	    picross->listX = NULL;
 	    picross->listY = NULL;
@@ -249,17 +249,17 @@ int readFile(Game *picross, char *name) { // On ne peut pas lire des map de plus
         array[p] = malloc(sizeof(char) * size * size);
     }
 
-    // On lit la listX
+    // read listX
 	fscanf(file, "%s", buffer);
 	convertCharToArray(buffer, ';', array, size);
 	convertArrayToInt(array, ',', picross->listX, size);
 
-	// On lit la listY
+	// read listY
 	fscanf(file, "%s", buffer);
     convertCharToArray(buffer, ';', array, size);
     convertArrayToInt(array, ',', picross->listY, size);
 
-    // On lit la map
+    // read map
     fscanf(file, "%s", buffer);
     convertCharToArray(buffer, ';', array, size*size);
 
@@ -320,10 +320,10 @@ int convertArrayToInt(char **array, char separator, int **retour, int size){
 
 	int i;
 
-	for (i = 0; i < size; i++){ // Boucle pour chaque tableau
+	for (i = 0; i < size; i++){ // loop for each table
 
 		int j;
-		// Recuperation de la ligne sous la forme "3,2,1"
+		// recovering the line as "3,2,1"
 		for (j = 0; j < size; j++){
 			buffer[j] = array[i][j];
 		}
@@ -333,7 +333,7 @@ int convertArrayToInt(char **array, char separator, int **retour, int size){
 		int p = 0;
 		char *nb = malloc(sizeof(char) * size * size);
 
-		// Transformation de la ligne en int
+		// transformation of the line to int
 		while (buffer[j] != '\0') {
 
 			index = 0;
@@ -368,7 +368,7 @@ int checkHint(Game *picross){
 
     for (int i = 0; i < picross->size; i++){
         int j;
-        // Pour les X
+        // for X
         for (j = 0; j < picross->size; j++){
             tabTmp[j] = picross->map[i * picross->size + j];
         }
@@ -381,7 +381,7 @@ int checkHint(Game *picross){
             }
         }
 
-        // Pour les Y
+        // for Y
 
         for (j = 0; j < picross->size; j++){
             tabTmp[j] = picross->map[picross->size * j + i];

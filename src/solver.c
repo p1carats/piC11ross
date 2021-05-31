@@ -1,13 +1,12 @@
 #include "solver.h"
 
 int checkGrid(Game *picross, int *tab, int *pos) {
-  if (pos[0] > picross->size || pos[1] > picross->size) { // If pos is out of bounds
-    return -1;
+  if (pos[0] > picross->size || pos[1] > picross->size) {
+    return -1; // if pos is out of bounds
   }
   
-  // si la case est noire, on peut admettre que la taille soit inferieur ou égale
-  // vérifie la ligne
-  // vérifie la cohérence de la ligne si on est en bout de ligne
+  // checks lines + consistency of the line if we are at the end of the line
+  // if the square is black, the size can be assumed to be less than or equal to
   if (pos[1] == (picross->size - 1)) {
     int *tabTmp = malloc(sizeof(int) * picross->size);
     int *hintTmp = malloc(sizeof(int) * picross->size);
@@ -30,7 +29,7 @@ int checkGrid(Game *picross, int *tab, int *pos) {
   int *tabHint = malloc(sizeof(int) * picross->size);
   countLine(tab, tabHint, picross->size);
   
-  // vérifie si le nombre de groupe de nombre est inferieur ou égal
+  // check whether the number of number groups is less than or equal to
   int nb = 0;
   int nbEnCours = 0;
   int i;
@@ -49,13 +48,13 @@ int checkGrid(Game *picross, int *tab, int *pos) {
   }
   free(tabHint);
   
-  // vérifie le nombre de 1 dans le groupe actuel
+  // checks the number of 1's in the current group
   if (tab[pos[0] * picross->size + pos[1]] == 1) { 
     int i;
     int paquet = 0;
     int position = pos[0] * picross->size + pos[1];
     int existe = -5;
-    while (position > -1 && tab[position] == 1) { // On compte le nombre de 1 à gauche
+    while (position > -1 && tab[position] == 1) { // count the number from 1 to the left
       paquet++;
       position -= 1;
     }
@@ -69,7 +68,7 @@ int checkGrid(Game *picross, int *tab, int *pos) {
     }
   }
   
-	// vérifie la colonne
+	// check the column
   int *tabTmp = malloc(sizeof(int) * picross->size);
   int *hintTmp = malloc(sizeof(int) * picross->size);
   for (i = 0; i < picross->size; i++){
