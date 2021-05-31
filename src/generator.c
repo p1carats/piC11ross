@@ -115,23 +115,21 @@ int showHint(Game *picross) {
   if (picross == NULL) {
     return -1;
   }
+    printf("Liste X : \n");
   for (int i = 0; i < picross->size; i++) {
     for (int j = 0; j < picross->size; j++) {
-      if (picross->listX[i][j] != 0){
         printf("%d ", picross->listX[i][j]);
-      }
+        if (j == picross->size - 1) printf("\n");
     }
-    printf("\n");
   }
-  printf("\n_______________________________________________\n\n");
+    printf("\nListe Y : \n");
   for (int i = 0; i < picross->size; i++) {
     for (int j = 0; j < picross->size; j++) {
-      if (picross->listY[i][j] != 0) {
         printf("%d ", picross->listY[i][j]);
-      }
+        if (j == picross->size - 1) printf("\n");
     }
-    printf("\n");
   }
+    printf("\n");
   return 0;
 }
 

@@ -28,7 +28,8 @@ int main(void) {
   
   readFile(picross, "db.txt");
   showHint(picross);
-  printf("%d\n", checkHint(picross));
+  displayMap(picross);
+  printf("\n%d\n", checkHint(picross));
   free(tab);
   
   for (int i = 0; i < size; i++) {
