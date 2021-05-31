@@ -2,13 +2,14 @@
 
 int checkGrid(Game *picross, int pos) {
   if (pos >= picross->size * picross->size) {
+    printf("\n-1\n");
     return -1; // if pos is out of bounds
   }
 
   int posX = pos % picross->size;
   int posY = (int) pos / picross->size;
 
-  printf("X : %d Y : %d\n", posX, posY);
+  //printf("X : %d Y : %d\n", posX, posY);
 
   // On check la ligne
 
@@ -40,16 +41,19 @@ int checkGrid(Game *picross, int pos) {
     }
   }
 
-  printf("nombreActuel : %d, nombreDePaquet : %d\n", nombreActuel, nombreDePaquet);
+  //printf("nombreActuel : %d, nombreDePaquet : %d\n", nombreActuel, nombreDePaquet);
 
   // On verifie que les deux concordes
   for (i = 0; i < picross->size; i++){
     if (nombreActuel > nombreDePaquet){
-        return -2;
+      printf("\n-2\n");
+      return -2;
       }
   }
 
   // On check la colonne
+  nombreActuel = 0;
+  nombreDePaquet = 0;
 
   // On récupére la colonne en cours
   for (i = 0; i < picross->size; i++){
@@ -59,9 +63,26 @@ int checkGrid(Game *picross, int pos) {
   // On récupére les indices de la ligne en cours
   countLine(ligne, hint, picross->size);
 
+  // On recupére le nombre de paquet de 1 sur la ligne actuellement
+  for (i = 0; i < picross->size; i++){
+    if (hint[i] != 0){
+      nombreActuel += hint[i];
+    }
+  }
+
+  // On recupére le nombre de paquet de 1 sur la ligne
+  for (i = 0; i < picross->size; i++){
+    if (picross->listY[posX][i] != 0){
+      nombreDePaquet += picross->listY[posX][i];
+    }
+  }
+
+  //printf("nombreActuel : %d, nombreDePaquet : %d\n", nombreActuel, nombreDePaquet);
+
   // On verifie que les deux concordes
   for (i = 0; i < picross->size; i++){
-    if (hint[i] > picross->listY[posY][i]){
+    if (nombreActuel > nombreDePaquet){
+      printf("\n-3\n");
       return -3;
     }
   }
@@ -76,8 +97,15 @@ int solver (Game *picross, int pos){ // Il faut stocker la solution quelque part
       printf("\nSolution Trouvée\n");
       displayMap(picross);
     }
-  }else{     // Les appels récursifs
-    if (checkGrid(picross, pos - 1) == 0) {
+  }else{   // Les appels récursifs
+    if (pos == 0) {
+      if (checkGrid(picross, pos) == 0) {
+        picross->map[pos] = 1;
+        solver(picross, pos + 1);
+        picross->map[pos] = 0;
+        solver(picross, pos + 1);
+      }
+    }else if (checkGrid(picross, pos - 1) == 0) {
       picross->map[pos] = 1;
       solver(picross, pos + 1);
       picross->map[pos] = 0;
