@@ -24,9 +24,9 @@ int main(void) {
   //displayMap(picross);
   //showHint(picross);
   //printf("\n");
-  //createFile(picross, "grid.txt");
+  //createFile(picross, "db.txt");
   
-  readFile(picross, "grid.txt");
+  readFile(picross, "db.txt");
   showHint(picross);
   printf("%d\n", checkHint(picross));
   free(tab);
