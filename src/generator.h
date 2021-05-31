@@ -1,21 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct jeu {
-	int size;
-	int *map;
-	int **listX;
-	int **listY;
-} Jeu;
+typedef struct picross {
+  int size;
+  int *map;
+  int **listX;
+  int **listY;
+} Game;
 
-Jeu* newJeu(int size, int *map, int **listX, int **listY);
-int newMap(Jeu *jeu);
-int displayMap(Jeu *jeu);
+Game* newGame(int size, int *map, int **listX, int **listY);
+
+int newMap(Game *picross);
+int displayMap(Game *picross);
 int countLine(int *tab, int *retour, int size);
-int getHint(Jeu *jeu);
-int showHint(Jeu *jeu);
-int createFile(Jeu *jeu, char* nom);
-int readFile(Jeu *jeu, char* name);
+int getHint(Game *picross);
+int showHint(Game *picross);
+int createFile(Game *picross, char* nom);
+int readFile(Game *picross, char* name);
 int convertCharToArray(char *buffer, char separator, char **array, int size);
 int convertArrayToInt(char **array, char separator, int **retour, int size);
-int checkHint(Jeu *jeu);
+int checkHint(Game *picross);

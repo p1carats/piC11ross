@@ -1,129 +1,110 @@
 #include "generator.h"
 
-// creates a new structure Jeu with 4 arguments : size, map, listX and listY
-Jeu* newJeu(int size, int *map, int **listX, int **listY){
-	Jeu *jeu = (Jeu*) malloc(sizeof(Jeu));
-
-	if (jeu != NULL){
-
-		jeu->size = size;
-		jeu->map = map;
-		jeu->listX = listX;
-		jeu->listY = listY;
-
-        for(int i = 0; i < jeu->size; i++){
-            jeu->listX[i] = malloc(sizeof(int) * jeu->size);
-            jeu->listY[i] = malloc(sizeof(int) * jeu->size);
-
-            if (jeu->listX[i] == NULL || jeu->listY[i] == NULL){
-                return NULL;
-            }
-        }
-
-		return jeu;
-
-	}else{
-
-		return NULL;
-	}
+// creates a new Game structure with 4 arguments : size, map, listX and listY
+Game* newGame(int size, int *map, int **listX, int **listY) {
+  Game *picross = (Game*) malloc(sizeof(Game));
+  if (picross != NULL) {
+    picross->size = size;
+    picross->map = map;
+    picross->listX = listX;
+    picross->listY = listY;
+    for(int i = 0; i < picross->size; i++) {
+      picross->listX[i] = malloc(sizeof(int) * picross->size);
+      picross->listY[i] = malloc(sizeof(int) * picross->size);
+      if (picross->listX[i] == NULL || picross->listY[i] == NULL) {
+        return NULL;
+      }
+    }
+    return picross;
+	} else {
+    return NULL;
+  }
 }
 
 // creates a new map, takes as arguments an empty tab and its dimension
-int newMap(Jeu *jeu) {
-	int size = jeu->size;
-	for (int i = 0; i < size * size; i++) {
-		int alea = rand() % 10;
-		if (alea > 3) { // 2 out of 3 odds
-			jeu->map[i] = 1;
-		} else {
-			jeu->map[i] = 0;
-		}
-	}
-
-	return 0;
+int newMap(Game *picross) {
+  int size = picross->size;
+  for (int i = 0; i < size * size; i++) {
+    int alea = rand() % 10;
+    if (alea > 3) { // 2 out of 3 odds
+      picross->map[i] = 1;
+    } else {
+      picross->map[i] = 0;
+    }
+  }
+  return 0;
 }
 
 // displays a map, takes as arguments a tab and its dimension
-int displayMap(Jeu *jeu) {
-	int size = jeu->size;
-	for (int i = 0; i < size * size; i++) {
-		if (i % size == 0 && i != 0) {
-			printf("\n");
-		}
-		if (jeu->map[i] == 1){
-			printf("#");
-		}else{
-			printf("-");
-		}
-	}
-	printf("\n");
-	return 0;
+int displayMap(Game *picross) {
+  int size = picross->size;
+  for (int i = 0; i < size * size; i++) {
+    if (i % size == 0 && i != 0) {
+      printf("\n");
+    }
+    if (picross->map[i] == 1) {
+      printf("#");
+    } else {
+      printf("-");
+    }
+  }
+  printf("\n");
+  return 0;
 }
 
 // returns a tab with the number of "package", takes as argument two tabs (both having the same dimension)
 int countLine(int *tab, int *retour, int size) {
-	int index = 0;
-	int tabIndex = 0;
-
-	for (int i = 0; i < size; i++) {
-		retour[i] = 0;
-	}
-
-	for (int i = 0; i < size; i++) {
-		if (tab[i] == 1) {
-			index++;
-		} else if(index > 0) { // only if tab[i] == 0 and index > 0
-			retour[tabIndex] = index;
-			tabIndex++;
-			index = 0;
-		}
-	}
-
-	if (index > 0 && tab[size - 1] == 1) {
-		retour[tabIndex] = index;
-	}
-
-	return 0;
+  int index = 0;
+  int tabIndex = 0;
+  
+  for (int i = 0; i < size; i++) {
+    retour[i] = 0;
+  }
+  
+  for (int i = 0; i < size; i++) {
+    if (tab[i] == 1) {
+      index++;
+		} else if (index > 0) { // only if tab[i] == 0 and index > 0
+      retour[tabIndex] = index;
+      tabIndex++;
+      index = 0;
+    }
+  }
+  if (index > 0 && tab[size - 1] == 1) {
+    retour[tabIndex] = index;
+  }
+  return 0;
 }
 
-// Assign to listX and listY their values
-int getHint(Jeu *jeu) {
+// aggisn to listX and listY their values
+int getHint(Game *picross) {
+  int *tabTmp = malloc(sizeof(int) * picross->size);
+  int *tabReturn =  malloc(sizeof(int) * picross->size);
+  if (tabTmp == NULL || tabReturn == NULL) {
+    return -1;
+  }
+  for (int i = 0; i < picross->size; i++) {
+    int j;
+    *tabReturn = 0;
+    *tabTmp = 0;
+    for (j = 0; j < picross->size; j++) {
+      tabTmp[j] = picross->map[j + i * picross->size];
+    }
+    countLine(tabTmp, tabReturn, picross->size);
+    for(j = 0; j < picross->size; j++) {
+      picross->listX[i][j] = tabReturn[j];
+    }
+  }
+  for (int i = 0; i < picross->size; i++) {
+    int j = 0;
+    for (j = 0; j < picross->size; j++) {
+      tabTmp[j] = picross->map[j * picross->size + i];
+    }
 
-	int *tabTmp = malloc(sizeof(int) * jeu->size);
-	int *tabReturn =  malloc(sizeof(int) * jeu->size);
+		countLine(tabTmp, tabReturn, picross->size);
 
-	if (tabTmp == NULL || tabReturn == NULL) {
-		return -1;
-	}
-
-	for (int i = 0; i < jeu->size; i++) {
-		int j;
-
-		*tabReturn = 0;
-		*tabTmp = 0;
-
-		for (j = 0; j < jeu->size; j++) {
-			tabTmp[j] = jeu->map[j + i * jeu->size];
-		}
-
-		countLine(tabTmp, tabReturn, jeu->size);
-
-		for(j = 0; j < jeu->size; j++){
-			jeu->listX[i][j] = tabReturn[j];
-		}
-
-	}
-
-	for (int i = 0; i < jeu->size; i++) {
-		int j = 0;
-		for (j = 0; j < jeu->size; j++) {
-			tabTmp[j] = jeu->map[j * jeu->size + i];
-		}
-
-		countLine(tabTmp, tabReturn, jeu->size);
-
-		for(j = 0; j < jeu->size; j++){
-			jeu->listY[i][j] = tabReturn[j];
+		for(j = 0; j < picross->size; j++){
+			picross->listY[i][j] = tabReturn[j];
 		}
 
 	}
@@ -135,25 +116,25 @@ int getHint(Jeu *jeu) {
 }
 
 // show values of listX and listY (for debugging)
-int showHint(Jeu *jeu){
-	if (jeu == NULL) {
+int showHint(Game *picross){
+	if (picross == NULL) {
 		return -1;
 	}
 
-	for(int i = 0; i < jeu->size; i++){
-		for(int j = 0; j < jeu->size; j++){
-			if (jeu->listX[i][j] != 0){
-				printf("%d ", jeu->listX[i][j]);
+	for(int i = 0; i < picross->size; i++){
+		for(int j = 0; j < picross->size; j++){
+			if (picross->listX[i][j] != 0){
+				printf("%d ", picross->listX[i][j]);
 			}
 		}
 		printf("\n");
 	}
 	printf("\n_______________________________________________\n\n");
 
-	for(int i = 0; i < jeu->size; i++){
-		for(int j = 0; j < jeu->size; j++){
-			if (jeu->listY[i][j] != 0){
-				printf("%d ", jeu->listY[i][j]);
+	for(int i = 0; i < picross->size; i++){
+		for(int j = 0; j < picross->size; j++){
+			if (picross->listY[i][j] != 0){
+				printf("%d ", picross->listY[i][j]);
 			}
 		}
 		printf("\n");
@@ -163,7 +144,7 @@ int showHint(Jeu *jeu){
 
 }
 
-int createFile(Jeu *jeu, char name[16]){
+int createFile(Game *picross, char name[16]){
 
 	FILE *file;
 	char buffer[16] = {0};
@@ -171,7 +152,7 @@ int createFile(Jeu *jeu, char name[16]){
 	int i,j;
 
 	// On ecrit la taille
-	sprintf(buffer, "%d", jeu->size);
+	sprintf(buffer, "%d", picross->size);
 	fputs(buffer, file);
 	fputs(";", file);
 	fputs(buffer, file);
@@ -179,20 +160,20 @@ int createFile(Jeu *jeu, char name[16]){
 	fputs("\n", file);
 
 	// On ecrit la liste X
-	for (i = 0; i < jeu->size; i++){
-		for (j = 0; j < jeu->size; j++){
-			if (jeu->listX[i][j] != 0 || j == 0){
-				sprintf(buffer, "%d", jeu->listX[i][j]);
+	for (i = 0; i < picross->size; i++){
+		for (j = 0; j < picross->size; j++){
+			if (picross->listX[i][j] != 0 || j == 0){
+				sprintf(buffer, "%d", picross->listX[i][j]);
 				fputs(buffer, file);
 			}
 
-			if (j + 1 < jeu->size){
-				if (jeu->listX[i][j+1]){
+			if (j + 1 < picross->size){
+				if (picross->listX[i][j+1]){
 					fputs(",", file);
 				}
 			}
 		}
-		if (i < jeu->size - 1) {
+		if (i < picross->size - 1) {
 			fputs(";", file);
 		}
 
@@ -201,21 +182,21 @@ int createFile(Jeu *jeu, char name[16]){
 	fputs("\n", file);
 
 	// On ecrit la liste Y
-	for (i = 0; i < jeu->size; i++){
-		for (j = 0; j < jeu->size; j++){
-			if (jeu->listY[i][j] != 0 || j == 0){
-				sprintf(buffer, "%d", jeu->listY[i][j]);
+	for (i = 0; i < picross->size; i++){
+		for (j = 0; j < picross->size; j++){
+			if (picross->listY[i][j] != 0 || j == 0){
+				sprintf(buffer, "%d", picross->listY[i][j]);
 				fputs(buffer, file);
 			}
 
-			if (j + 1 < jeu->size){
-				if (jeu->listY[i][j+1]){
+			if (j + 1 < picross->size){
+				if (picross->listY[i][j+1]){
 					fputs(",", file);
 				}
 			}
 		}
 
-		if (i < jeu->size - 1) {
+		if (i < picross->size - 1) {
 			fputs(";", file);
 		}
 	}
@@ -223,9 +204,9 @@ int createFile(Jeu *jeu, char name[16]){
 	fputs("\n", file);
 
 	// On ecrit la map
-	for (i = 0; i < jeu->size; i++){
-		for (j = 0; j < jeu->size; j++){
-			sprintf(buffer, "%d", jeu->map[i * jeu->size + j]);
+	for (i = 0; i < picross->size; i++){
+		for (j = 0; j < picross->size; j++){
+			sprintf(buffer, "%d", picross->map[i * picross->size + j]);
 			fputs(buffer, file);
 		}
 	}
@@ -234,7 +215,7 @@ int createFile(Jeu *jeu, char name[16]){
 	return 0;
 }
 
-int readFile(Jeu *jeu, char *name){ // On ne peut pas lire des map de plus de 30*30
+int readFile(Game *picross, char *name) { // On ne peut pas lire des map de plus de 30*30
 
 	FILE *file;
 	char buffer[1000] = {0};
@@ -252,13 +233,13 @@ int readFile(Jeu *jeu, char *name){ // On ne peut pas lire des map de plus de 30
 	}
 
 	sscanf(nb, "%d", &size);
-	jeu->size = size;
+	picross->size = size;
 
-	if (jeu->size > 30){ // Cas d'une map trop grande
-	    jeu->size = 0;
-	    jeu->listX = NULL;
-	    jeu->listY = NULL;
-	    jeu->map = 0;
+	if (picross->size > 30){ // Cas d'une map trop grande
+	    picross->size = 0;
+	    picross->listX = NULL;
+	    picross->listY = NULL;
+	    picross->map = 0;
         return -1;
 	}
 
@@ -271,12 +252,12 @@ int readFile(Jeu *jeu, char *name){ // On ne peut pas lire des map de plus de 30
     // On lit la listX
 	fscanf(file, "%s", buffer);
 	convertCharToArray(buffer, ';', array, size);
-	convertArrayToInt(array, ',', jeu->listX, size);
+	convertArrayToInt(array, ',', picross->listX, size);
 
 	// On lit la listY
 	fscanf(file, "%s", buffer);
     convertCharToArray(buffer, ';', array, size);
-    convertArrayToInt(array, ',', jeu->listY, size);
+    convertArrayToInt(array, ',', picross->listY, size);
 
     // On lit la map
     fscanf(file, "%s", buffer);
@@ -284,9 +265,9 @@ int readFile(Jeu *jeu, char *name){ // On ne peut pas lire des map de plus de 30
 
     for(i = 0; i < size * size; i++){
         if (array[0][i] == 48){
-            jeu->map[i] = 0;
+            picross->map[i] = 0;
         }else if (array[0][i] == 49){
-            jeu->map[i] = 1;
+            picross->map[i] = 1;
         }
     }
 
@@ -378,38 +359,38 @@ int convertArrayToInt(char **array, char separator, int **retour, int size){
 	return 0;
 }
 
-int checkHint(Jeu *jeu){
+int checkHint(Game *picross){
 
     int retour = 0;
 
-    int *tabTmp = malloc(sizeof(int) * jeu->size);
-    int *hintTmp = malloc(sizeof(int) * jeu->size);
+    int *tabTmp = malloc(sizeof(int) * picross->size);
+    int *hintTmp = malloc(sizeof(int) * picross->size);
 
-    for (int i = 0; i < jeu->size; i++){
+    for (int i = 0; i < picross->size; i++){
         int j;
         // Pour les X
-        for (j = 0; j < jeu->size; j++){
-            tabTmp[j] = jeu->map[i * jeu->size + j];
+        for (j = 0; j < picross->size; j++){
+            tabTmp[j] = picross->map[i * picross->size + j];
         }
 
-        countLine(tabTmp, hintTmp, jeu->size);
+        countLine(tabTmp, hintTmp, picross->size);
 
-        for (j = 0; j < jeu->size; j++){
-            if (hintTmp[j] != jeu->listX[i][j]){
+        for (j = 0; j < picross->size; j++){
+            if (hintTmp[j] != picross->listX[i][j]){
                 retour = -1;
             }
         }
 
         // Pour les Y
 
-        for (j = 0; j < jeu->size; j++){
-            tabTmp[j] = jeu->map[jeu->size * j + i];
+        for (j = 0; j < picross->size; j++){
+            tabTmp[j] = picross->map[picross->size * j + i];
         }
 
-        countLine(tabTmp, hintTmp, jeu->size);
+        countLine(tabTmp, hintTmp, picross->size);
 
-        for (j = 0; j < jeu->size; j++){
-            if (hintTmp[j] != jeu->listY[i][j]){
+        for (j = 0; j < picross->size; j++){
+            if (hintTmp[j] != picross->listY[i][j]){
                 retour = -1;
             }
         }
