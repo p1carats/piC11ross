@@ -239,7 +239,7 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
   
   // read map
   fscanf(file, "%s", buffer);
-  convertCharToArray(buffer, ' ', array, size*size);
+  readMap(buffer, picross->map, size*size);
   
   for(i = 0; i < size * size; i++) {
     if (array[0][i] == 48) {
@@ -255,6 +255,10 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
   free(array);
   fclose(file);
   return 0;
+}
+
+int readMap(char *buffer, int *out, int size){
+
 }
 
 int convertCharToArray(char *buffer, char separator, char **array, int size) {

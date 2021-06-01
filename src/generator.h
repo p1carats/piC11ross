@@ -17,6 +17,7 @@ int getHint(Game *picross);
 int showHint(Game *picross);
 int createFile(Game *picross, char* nom);
 int readFile(Game *picross, char* name);
+int readMap(char *buffer, int *out, int size);
 int convertCharToArray(char *buffer, char separator, char **array, int size);
 int convertArrayToInt(char **array, char separator, int **retour, int size);
 int checkHint(Game *picross);
