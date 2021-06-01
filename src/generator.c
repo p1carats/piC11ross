@@ -239,7 +239,7 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
   
   // read map
   fscanf(file, "%s", buffer);
-  convertCharToArray(buffer, ';', array, size*size);
+  convertCharToArray(buffer, ' ', array, size*size);
   
   for(i = 0; i < size * size; i++) {
     if (array[0][i] == 48) {
@@ -259,56 +259,53 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
 
 int convertCharToArray(char *buffer, char separator, char **array, int size) {
   int i = 0;
-  int j;
+  int j,q;
   int index = 0;
-  char *elem = malloc(sizeof(char) * size);
-  while (buffer[i] != '\0' && index < 4) {
-    for (j = 0; j < size; j++) {
-      elem[j] = 0;
+  char *elem = malloc(sizeof(char) * size * size);
+
+  while (index < size) {
+    j = 0;
+    for (q = 0; q < size * size; q++){ // On vide le buffer
+      elem[q] = 0;
     }
-    
-    int p = 0;
-    while (buffer[i] != separator && buffer[i] != '\0') {
-      elem[p] = buffer[i];
-      p++;
+    while (buffer[i] != separator && buffer[i] != '\0'){
+      elem[j] = buffer[i];
+      j++;
       i++;
     }
-    
-    for (j = 0; j < size; j++) {
-      printf("index : %d, j : %d\n", index, j);
-      array[index][j] = elem[j];
-    }
-    
-    index++;
     i++;
+    for (q = 0; q < size * size; q++){
+      array[index][q] = elem[q];
+    }
+    index++;
   }
   free(elem);
   return 0;
 }
 
 int convertArrayToInt(char **array, char separator, int **retour, int size) {
-  char *buffer = malloc(sizeof(char) * size);
+  char *buffer = malloc(sizeof(char) * size * size);
   
-  int i;
-  int j;
+  int i,j,p, index;
+  char *nb = malloc(sizeof(char) * size * size);
   
   // loop for each table
   for (i = 0; i < size; i++) {
     // recovering the line as "3,2,1"
-    for (j = 0; j < size; j++) {
+    for (j = 0; j < size * size; j++) {
       buffer[j] = array[i][j];
     }
-    
-    int index = 0;
+
     j = 0;
-    int p = 0;
-    char *nb = malloc(sizeof(char) * size * size);
-    
+    p = 0;
+
     // transformation of the line to int
     while (buffer[j] != '\0') {
-      for (int q = 0; q < size*size; q++) {
+      index = 0;
+      for (int q = 0; q < size * size; q++) {
         nb[q] = 0;
       }
+
       while (buffer[j] != separator && buffer[j] != '\0') {
         nb[index] = buffer[j];
         index++;
@@ -316,10 +313,11 @@ int convertArrayToInt(char **array, char separator, int **retour, int size) {
       }
       sscanf(nb, "%d", &retour[i][p]);
       p++;
-      if (j < size - 1) j++;
+      if (j < (size * size) - 1 && (buffer[j] == separator || buffer[j] == '\0')) j++;
     }
   }
   free(buffer);
+  free(nb);
   return 0;
 }
 
