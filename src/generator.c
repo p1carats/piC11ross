@@ -3,16 +3,23 @@
 // creates a new Game structure with 4 arguments : size, map, listX and listY
 Game* newGame(int size, int *map, int **listX, int **listY) {
   Game *picross = (Game*) malloc(sizeof(Game));
+  int i,j;
   if (picross != NULL) {
     picross->size = size;
     picross->map = map;
     picross->listX = listX;
     picross->listY = listY;
-    for(int i = 0; i < picross->size; i++) {
+    for(i = 0; i < picross->size; i++) {
       picross->listX[i] = malloc(sizeof(int) * picross->size);
       picross->listY[i] = malloc(sizeof(int) * picross->size);
       if (picross->listX[i] == NULL || picross->listY[i] == NULL) {
         return NULL;
+      }
+    }
+    for (i = 0; i < picross->size; i++){
+      for (j = 0; j < picross->size; j++){
+        picross->listX[i][j] = 0;
+        picross->listY[i][j] = 0;
       }
     }
     return picross;
@@ -240,7 +247,7 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
 
   // read map
   fscanf(file, "%s", buffer);
-  readMap(buffer, picross, size);
+  readMap(buffer, picross->map, size);
 
   
   for (i = 0; i < size; i++){
@@ -251,13 +258,13 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
   return 0;
 }
 
-int readMap(char *buffer, Game *picross, int size){
+int readMap(char *buffer, int *out, int size){
 
   for (int i = 0; i < size * size; i++){
     if (buffer[i] == 49){
-      picross->map[i] = 1;
+      out[i] = 1;
     }else{
-      picross->map[i] = 0;
+      out[i] = 0;
     }
   }
 
