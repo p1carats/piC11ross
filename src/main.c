@@ -42,7 +42,7 @@ int generateur(int size){
 
   retour = newMap(picross);
   retour = getHint(picross);
-  retour = displayMap(picross);
+  retour = showMap(picross);
   retour = showHint(picross);
   retour = createFile(picross, "picross.txt");
 
@@ -73,7 +73,7 @@ int solving(char *name){
 
   retour = readFile(picross, name);
   retour = showHint(picross);
-  retour = displayMap(picross);
+  retour = showMap(picross);
 
   for (int i = 0; i < size; i++) {
     free(listX[i]);
