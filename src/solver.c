@@ -16,16 +16,16 @@ int checkGrid(Game *picross, int pos) {
   int i;
   int nombreDePaquet = 0;
   int nombreActuel = 0;
-  int *ligne = malloc(sizeof(int) * picross->size);
+  int *line = malloc(sizeof(int) * picross->size);
   int *hint  = malloc(sizeof(int) * picross->size);
 
   // On récupére la ligne en cours
   for (i = 0; i < picross->size; i++){
-    ligne[i] = picross->map[posY * picross->size + i];
+    line[i] = picross->map[posY * picross->size + i];
   }
 
   // On récupére les indices de la ligne en cours
-  countLine(ligne, hint, picross->size);
+  countLine(line, hint, picross->size);
 
   // On recupére le nombre de paquet de 1 sur la ligne actuellement
   for (i = 0; i < picross->size; i++){
@@ -55,11 +55,11 @@ int checkGrid(Game *picross, int pos) {
 
   // On récupére la colonne en cours
   for (i = 0; i < picross->size; i++){
-    ligne[i] = picross->map[i * picross->size + posX];
+    line[i] = picross->map[i * picross->size + posX];
   }
 
   // On récupére les indices de la ligne en cours
-  countLine(ligne, hint, picross->size);
+  countLine(line, hint, picross->size);
 
   // On recupére le nombre de paquet de 1 sur la ligne actuellement
   for (i = 0; i < picross->size; i++){
@@ -88,14 +88,15 @@ int checkGrid(Game *picross, int pos) {
   return 0;
 }
 
-int solver (Game *picross, int pos){ // Il faut stocker la solution quelque part
-
-  if (pos == picross->size){ // Quand on a une solution
-    if (checkGrid(picross, pos - 1) == 0){
+int solver (Game *picross, int pos) { // Il faut stocker la solution quelque part
+  if (pos == picross->size) {
+    // when a solution is found
+    if (checkGrid(picross, pos - 1) == 0) {
       printf("\nSolution Trouvée\n");
-      displayMap(picross);
+      showMap(picross);
     }
-  }else{   // Les appels récursifs
+  } else {
+    // recursive calls
     if (pos == 0) {
       if (checkGrid(picross, pos) == 0) {
         picross->map[pos] = 1;
@@ -103,7 +104,7 @@ int solver (Game *picross, int pos){ // Il faut stocker la solution quelque part
         picross->map[pos] = 0;
         solver(picross, pos + 1);
       }
-    }else if (checkGrid(picross, pos - 1) == 0) {
+    } else if (checkGrid(picross, pos - 1) == 0) {
       picross->map[pos] = 1;
       solver(picross, pos + 1);
       picross->map[pos] = 0;

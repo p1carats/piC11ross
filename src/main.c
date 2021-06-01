@@ -5,17 +5,17 @@ int main(int argc, char *argv[]) {
 
   int size;
 
-  if (argc != 3){
+  if (argc != 3) {
     printf("Menu d'aide :\n- Pour generer -g size\n- Pour resoudre -s name.txt\n");
     return -1;
-  }else{
+  } else {
     if (argv[1][1] == 's'){
       printf("Solving ...\n");
       return 0;
-    }else if (argv[1][1] == 'g'){
+    } else if (argv[1][1] == 'g'){
       printf("Creating ...\n");
       return 0;
-    }else{
+    } else {
       printf("ERREUR\nMenu d'aide :\n- Pour generer -g size\n- Pour resoudre -s name.txt\n");
       return 0;
     }
@@ -30,18 +30,18 @@ int main(int argc, char *argv[]) {
   
   //newMap(picross);
   //getHint(picross);
-  //displayMap(picross);
+  //showMap(picross);
   //showHint(picross);
   //printf("\n");
-  //createFile(picross, "db.txt");
+  //createFile(picross, "picross.txt");
   
-  readFile(picross, "db.txt");
+  readFile(picross, "picross.txt");
   showHint(picross);
-  //displayMap(picross);
+  //showMap(picross);
   //printf("\n%d\n", checkHint(picross));
   //printf("\n%d\n", checkGrid(picross, picross->map, 1));
   //printf("\n%d\n", solver(picross, 0));
-  displayMap(picross);
+  showMap(picross);
   free(tab);
   
   for (int i = 0; i < size; i++) {
