@@ -202,6 +202,34 @@ int createFile(Game *picross, char name[16]) {
   return 0;
 }
 
+
+int getSize(char *name, int *size){
+
+  FILE *file;
+  file = fopen(name, "r");
+  int i = 0;
+  char buffer[20] = {0};
+
+  if (file == NULL){
+    return -1;
+  }
+
+  // size reading
+  fscanf(file, "%s", buffer);
+  char nb[2] = {0};
+
+  while(buffer[i] != ';') {
+    nb[i] = buffer[i];
+    i++;
+  }
+
+  sscanf(nb, "%d", size);
+  fclose(file);
+
+  return 0;
+
+}
+
 int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (hard-limit)
   FILE *file;
   char buffer[1000] = {0};
