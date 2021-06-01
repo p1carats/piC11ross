@@ -20,10 +20,10 @@ int main(void) {
   
   readFile(picross, "db.txt");
   showHint(picross);
-  displayMap(picross);
-  printf("\n%d\n", checkHint(picross));
+  //displayMap(picross);
+  //printf("\n%d\n", checkHint(picross));
   //printf("\n%d\n", checkGrid(picross, picross->map, 1));
-  printf("\n%d\n", solver(picross, 0));
+  //printf("\n%d\n", solver(picross, 0));
   displayMap(picross);
   free(tab);
   

@@ -9,7 +9,7 @@ int checkGrid(Game *picross, int pos) {
   int posX = pos % picross->size;
   int posY = (int) pos / picross->size;
 
-  //printf("X : %d Y : %d\n", posX, posY);
+  printf("X : %d Y : %d\n", posX, posY);
 
   // On check la ligne
 
@@ -30,25 +30,23 @@ int checkGrid(Game *picross, int pos) {
   // On recupére le nombre de paquet de 1 sur la ligne actuellement
   for (i = 0; i < picross->size; i++){
     if (hint[i] != 0){
-      nombreActuel += hint[i];
+      nombreActuel++;
     }
   }
 
   // On recupére le nombre de paquet de 1 sur la ligne
   for (i = 0; i < picross->size; i++){
     if (picross->listX[posY][i] != 0){
-      nombreDePaquet += picross->listX[posY][i];
+      nombreDePaquet++;
     }
   }
 
-  //printf("nombreActuel : %d, nombreDePaquet : %d\n", nombreActuel, nombreDePaquet);
+  printf("nombreActuel : %d, nombreDePaquet : %d\n", nombreActuel, nombreDePaquet);
 
   // On verifie que les deux concordes
-  for (i = 0; i < picross->size; i++){
-    if (nombreActuel > nombreDePaquet){
-      printf("\n-2\n");
-      return -2;
-      }
+  if (hint[nombreActuel] > picross->listX[posY][nombreActuel]){
+    printf("\n-2\n");
+    return -2;
   }
 
   // On check la colonne

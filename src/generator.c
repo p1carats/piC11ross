@@ -262,7 +262,7 @@ int convertCharToArray(char *buffer, char separator, char **array, int size) {
   int j;
   int index = 0;
   char *elem = malloc(sizeof(char) * size);
-  while (buffer[i] != '\0') {
+  while (buffer[i] != '\0' && index < 4) {
     for (j = 0; j < size; j++) {
       elem[j] = 0;
     }
@@ -275,6 +275,7 @@ int convertCharToArray(char *buffer, char separator, char **array, int size) {
     }
     
     for (j = 0; j < size; j++) {
+      printf("index : %d, j : %d\n", index, j);
       array[index][j] = elem[j];
     }
     
@@ -315,7 +316,7 @@ int convertArrayToInt(char **array, char separator, int **retour, int size) {
       }
       sscanf(nb, "%d", &retour[i][p]);
       p++;
-      j++;
+      if (j < size - 1) j++;
     }
   }
   free(buffer);
