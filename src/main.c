@@ -37,6 +37,9 @@ int main(int argc, char *argv[]) {
   
   readFile(picross, "db.txt");
   showHint(picross);
+  for (int q = 0; q < picross->size * picross->size; q++){
+    printf("%d\n", picross->map[q]);
+  }
   //displayMap(picross);
   //printf("\n%d\n", checkHint(picross));
   //printf("\n%d\n", checkGrid(picross, picross->map, 1));

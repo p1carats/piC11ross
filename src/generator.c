@@ -226,28 +226,22 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
   for (int p = 0; p < size; p++) {
     array[p] = malloc(sizeof(char) * size * size);
   }
-  
+
+
   // read listX
   fscanf(file, "%s", buffer);
   convertCharToArray(buffer, ';', array, size);
   convertArrayToInt(array, ',', picross->listX, size);
-  
+
   // read listY
   fscanf(file, "%s", buffer);
   convertCharToArray(buffer, ';', array, size);
   convertArrayToInt(array, ',', picross->listY, size);
-  
+
   // read map
   fscanf(file, "%s", buffer);
-  readMap(buffer, picross->map, size*size);
-  
-  for(i = 0; i < size * size; i++) {
-    if (array[0][i] == 48) {
-      picross->map[i] = 0;
-    } else if (array[0][i] == 49) {
-      picross->map[i] = 1;
-    }
-  }
+  readMap(buffer, picross, size);
+
   
   for (i = 0; i < size; i++){
     free(array[i]);
@@ -257,8 +251,17 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
   return 0;
 }
 
-int readMap(char *buffer, int *out, int size){
+int readMap(char *buffer, Game *picross, int size){
 
+  for (int i = 0; i < size * size; i++){
+    if (buffer[i] == 49){
+      picross->map[i] = 1;
+    }else{
+      picross->map[i] = 0;
+    }
+  }
+
+  return 0;
 }
 
 int convertCharToArray(char *buffer, char separator, char **array, int size) {
