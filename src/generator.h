@@ -11,7 +11,7 @@ typedef struct picross {
 Game* newGame(int size, int *map, int **listX, int **listY);
 
 int newMap(Game *picross);
-int displayMap(Game *picross);
+int showMap(Game *picross);
 int countLine(int *tab, int *retour, int size);
 int getHint(Game *picross);
 int showHint(Game *picross);
