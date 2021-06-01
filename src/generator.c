@@ -219,7 +219,7 @@ int getSize(char *name, int *size){
 
   // size reading
   fscanf(file, "%s", buffer);
-  char nb[2] = {0};
+  char nb[20] = {0};
 
   while(buffer[i] != ';') {
     nb[i] = buffer[i];
@@ -237,19 +237,11 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
   FILE *file;
   char buffer[1000] = {0};
   file = fopen(name, "r");
-  int i = 0;
-  int size;
-  
-  // size reading
-  fscanf(file, "%s", buffer);
-  char nb[2] = {0};
-  
-  while(buffer[i] != ';') {
-    nb[i] = buffer[i];
-    i++;
+  if (file == NULL){
+    return -1;
   }
-  sscanf(nb, "%d", &size);
-  picross->size = size;
+  int i = 0;
+  int size = picross->size;
   
   if (picross->size > 30) { // if the map is too large
     picross->size = 0;

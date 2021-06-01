@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
       return retour;
     }else if (argv[1][1] == 'g'){
       size = atoi(argv[2]);
-      if (size == 5 || size == 10 || size == 15) {
+      if (size == 5 || size == 10 || size == 15 || size == 20) {
         printf("Creating ...\n");
         retour = generateur(size);
       }else{
@@ -59,32 +59,56 @@ int generateur(int size){
 
 }
 
-int solving(char *name){
+int solving(char *name) {
 
-  int size, retour = 0;
-  getSize(name, &size);
+  int size, continuer = 0;
+  Game *picross = NULL;
+  int **listX = NULL;
+  int **listY = NULL;
+  int *tab = NULL;
 
-  int *tab = malloc(sizeof(int) * size * size);
-  int **listX = malloc(sizeof(int*) * size);
-  int **listY = malloc(sizeof(int*) * size);
+  if (getSize(name, &size) != 0){
+    continuer = -1;
+  }else{
 
-  Game *picross;
-  picross = newGame(size, tab, listX, listY);
+    tab = malloc(sizeof(int) * size * size);
+    listX = malloc(sizeof(int *) * size);
+    listY = malloc(sizeof(int *) * size);
 
-  retour = readFile(picross, name);
-  retour = showHint(picross);
-  retour = showMap(picross);
-
-  for (int i = 0; i < size; i++) {
-    free(listX[i]);
-    free(listY[i]);
+    picross = newGame(size, tab, listX, listY);
   }
-  free(tab);
-  free(listX);
-  free(listY);
-  free(picross);
 
-  return retour;
+  if (continuer == 0) {
+    if (readFile(picross, name) != 0) {
+      printf("ERREUR NOM DU FICHIER !\n");
+      continuer = -1;
+    }
+  }
+
+  if (continuer == 0) {
+    if (showHint(picross) != 0) {
+      continuer = -1;
+    }
+  }
+
+  if (continuer == 0) {
+    if (showMap(picross) != 0) {
+      continuer = -1;
+    }
+  }
+
+  if (continuer == 0) {
+    for (int i = 0; i < size; i++) {
+      free(listX[i]);
+      free(listY[i]);
+    }
+    free(tab);
+    free(listX);
+    free(listY);
+    free(picross);
+  }
+
+  return continuer;
 
 }
 
