@@ -3,22 +3,22 @@
 int main(int argc, char *argv[]) {
   srand(time(NULL));
 
-  int size, arg = 0;
+  int size;
 
-  if (argc == 2) {
-    sscanf(argv[1], "%d", &arg);
-    if (arg != 10 && arg != 15 && arg!= 20) {
-      printf("Incorrect given argument!\n");
-      return 1;
-    } else {
-      size = arg;
+  if (argc != 3){
+    printf("Menu d'aide :\n- Pour generer -g size\n- Pour resoudre -s name.txt\n");
+    return -1;
+  }else{
+    if (argv[1][1] == 's'){
+      printf("Solving ...\n");
+      return 0;
+    }else if (argv[1][1] == 'g'){
+      printf("Creating ...\n");
+      return 0;
+    }else{
+      printf("ERREUR\nMenu d'aide :\n- Pour generer -g size\n- Pour resoudre -s name.txt\n");
+      return 0;
     }
-  } else if (argc > 2) {
-    printf("Too many values given by user.\n");
-    return 1;
-  } else {
-    printf("Single value expected.\n");
-    return 1;
   }
   
   int *tab = malloc(sizeof(int) * size * size);
