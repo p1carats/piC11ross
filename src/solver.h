@@ -3,5 +3,5 @@
 
 #include "generator.h"
 
-int checkGrid(Game *picross, int pos);
-int solver (Game *picross, int pos);
+int checkGrid(Game *picross, int pos, int *line, int *hint);
+int solver (Game *picross, int pos, int *line, int *hint);

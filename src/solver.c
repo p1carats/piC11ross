@@ -1,6 +1,9 @@
 #include "solver.h"
 
-int checkGrid(Game *picross, int pos) {
+static long long boucle = 0;
+
+int checkGrid(Game *picross, int pos, int *line, int *hint) {
+  boucle++;
   if (pos >= picross->size * picross->size) {
     printf("\n-1\n");
     return -1; // if pos is out of bounds
@@ -16,9 +19,6 @@ int checkGrid(Game *picross, int pos) {
   int i;
   int nombreDePaquet = 0;
   int nombreActuel = 0;
-  int *line = malloc(sizeof(int) * picross->size);
-  int *hint  = malloc(sizeof(int) * picross->size);
-
 
   // On récupére la ligne en cours
   for (i = 0; i < picross->size; i++){
@@ -47,8 +47,6 @@ int checkGrid(Game *picross, int pos) {
   // On verifie que les deux concordes
   if (hint[nombreActuel] > picross->listX[posY][nombreActuel]){
     //printf("\n-2\n");
-    free(line);
-    free(hint);
     return -2;
   }
 
@@ -58,8 +56,6 @@ int checkGrid(Game *picross, int pos) {
       //printf("hint[%d] : %d picross->listX[%d][%d] : %d\n", i, hint[i], picross->listX[posY][i], posY, i);
       if (hint[i] != picross->listX[posY][i]) {
         //printf("-4\n");
-        free(line);
-        free(hint);
         return -4;
       }
     }
@@ -99,8 +95,6 @@ int checkGrid(Game *picross, int pos) {
   for (i = 0; i < picross->size; i++){
     if (nombreActuel > nombreDePaquet){
       //printf("\n-3\n");
-      free(line);
-      free(hint);
       return -3;
     }
   }
@@ -111,40 +105,37 @@ int checkGrid(Game *picross, int pos) {
       //printf("hint : %d picross : %d\n",hint[i], picross->listY[posX][i]);
       if (hint[i] != picross->listY[posX][i]) {
         //printf("-5\n");
-        free(line);
-        free(hint);
         return -5;
       }
     }
   }
 
   //printf("0\n");
-  free(line);
-  free(hint);
   return 0;
 }
 
-int solver (Game *picross, int pos) { // Il faut stocker la solution quelque part
+int solver (Game *picross, int pos, int *line, int *hint) { // Il faut stocker la solution quelque part
   if (pos == picross->size * picross->size) {
     // when a solution is found
-    if (checkGrid(picross, pos - 1) == 0) {
+    if (checkGrid(picross, pos - 1, line, hint) == 0) {
       printf("\nSolution Trouvée\n");
       showMap(picross);
+      printf("boucle : %lld\n", boucle);
     }
   } else {
     // recursive calls
     if (pos == 0) {
-      if (checkGrid(picross, pos) == 0) {
+      if (checkGrid(picross, pos, line, hint) == 0) {
         picross->map[pos] = 1;
-        solver(picross, pos + 1);
+        solver(picross, pos + 1, line, hint);
         picross->map[pos] = 0;
-        solver(picross, pos + 1);
+        solver(picross, pos + 1, line, hint);
       }
-    } else if (checkGrid(picross, pos - 1) == 0) {
+    } else if (checkGrid(picross, pos - 1, line, hint) == 0) {
       picross->map[pos] = 1;
-      solver(picross, pos + 1);
+      solver(picross, pos + 1, line, hint);
       picross->map[pos] = 0;
-      solver(picross, pos + 1);
+      solver(picross, pos + 1, line, hint);
     }
   }
   return 0;

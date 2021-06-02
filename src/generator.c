@@ -44,9 +44,8 @@ int newMap(Game *picross) {
 
 // displays a map, takes as arguments a tab and its dimension
 int showMap(Game *picross) {
-  int size = picross->size;
-  for (int i = 0; i < size * size; i++) {
-    if (i % size == 0 && i != 0) {
+  for (int i = 0; i < picross->size * picross->size; i++) {
+    if (i % picross->size == 0 && i != 0) {
       printf("\n");
     }
     if (picross->map[i] == 1) {
@@ -152,8 +151,6 @@ int createFile(Game *picross, char name[16]) {
   // write the size
   sprintf(buffer, "%d", picross->size);
   fputs(buffer, file);
-  fputs(";", file);
-  fputs(buffer, file);
   fputs("\n", file);
   
   // write listX
@@ -221,7 +218,7 @@ int getSize(char *name, int *size){
   fscanf(file, "%s", buffer);
   char nb[20] = {0};
 
-  while(buffer[i] != ';') {
+  while(buffer[i] != ';' && buffer[i] != '\0') {
     nb[i] = buffer[i];
     i++;
   }

@@ -66,6 +66,8 @@ int solving(char *name) {
   int **listX = NULL;
   int **listY = NULL;
   int *tab = NULL;
+  int *line = NULL;
+  int *hint = NULL;
 
   if (getSize(name, &size) != 0){
     continuer = -1;
@@ -74,6 +76,8 @@ int solving(char *name) {
     tab = malloc(sizeof(int) * size * size);
     listX = malloc(sizeof(int *) * size);
     listY = malloc(sizeof(int *) * size);
+    line = malloc(sizeof(int) * size);
+    hint = malloc(sizeof(int) * size);
 
     picross = newGame(size, tab, listX, listY);
   }
@@ -97,7 +101,7 @@ int solving(char *name) {
       picross->map[i] = 0;
     }
 
-    if (solver(picross, 0) != 0) {
+    if (solver(picross, 0, line, hint) != 0) {
       continuer = -1;
     }
   }
@@ -111,6 +115,8 @@ int solving(char *name) {
     free(listX);
     free(listY);
     free(picross);
+    free(line);
+    free(hint);
   }
 
   return continuer;
