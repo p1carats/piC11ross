@@ -257,6 +257,8 @@ int readFile(Game *picross, char *name) { // can't read maps larger than 30*30 (
     array[p] = malloc(sizeof(char) * size * size);
   }
 
+  // read size
+  fscanf(file, "%s", buffer);
 
   // read listX
   fscanf(file, "%s", buffer);

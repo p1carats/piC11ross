@@ -92,6 +92,12 @@ int solving(char *name) {
   }
 
   if (continuer == 0) {
+    if (solver(picross, 0) != 0) {
+      continuer = -1;
+    }
+  }
+
+  if (continuer == 0) {
     if (showMap(picross) != 0) {
       continuer = -1;
     }
