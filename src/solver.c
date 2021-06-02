@@ -1,6 +1,7 @@
 #include "solver.h"
 
 static long long boucle = 0;
+static int nombreDeSolutions = 0;
 
 int checkGrid(Game *picross, int pos, int *line, int *hint) {
   boucle++;
@@ -121,6 +122,7 @@ int solver (Game *picross, int pos, int *line, int *hint) { // Il faut stocker l
       printf("\nSolution Trouvée\n");
       showMap(picross);
       printf("boucle : %lld\n", boucle);
+      nombreDeSolutions++;
     }
   } else {
     // recursive calls
@@ -138,5 +140,5 @@ int solver (Game *picross, int pos, int *line, int *hint) { // Il faut stocker l
       solver(picross, pos + 1, line, hint);
     }
   }
-  return 0;
+  return nombreDeSolutions;
 }

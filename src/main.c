@@ -59,7 +59,7 @@ int generateur(int size){
 
 }
 
-int solving(char *name) {
+int solving(char *name) { // Return -2 if there are more than 1 soluce
 
   int size, continuer = 0;
   Game *picross = NULL;
@@ -101,12 +101,15 @@ int solving(char *name) {
       picross->map[i] = 0;
     }
 
-    if (solver(picross, 0, line, hint) != 0) {
-      continuer = -1;
+    int retour = solver(picross, 0, line, hint);
+
+    if (retour != 0) {
+      printf("Il y a %d solution(s)\n", retour);
+      continuer = 1;
     }
   }
 
-  if (continuer == 0) {
+  if (continuer == 0 || continuer == 1) {
     for (int i = 0; i < size; i++) {
       free(listX[i]);
       free(listY[i]);
