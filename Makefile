@@ -1,4 +1,9 @@
-CC=gcc
+ifeq ($(TARGET),window)
+	CC = x86_64-w64-mingw32-gcc
+else
+	CC = gcc
+endif
+
 CFLAGS=-I. -g3 -Wall -W -g
 
 BUILD_TARGET ?= picross.exe
