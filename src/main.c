@@ -92,13 +92,12 @@ int solving(char *name) {
   }
 
   if (continuer == 0) {
-    if (solver(picross, 0) != 0) {
-      continuer = -1;
-    }
-  }
 
-  if (continuer == 0) {
-    if (showMap(picross) != 0) {
+    for (int i = 0; i < picross->size * picross->size; i++){
+      picross->map[i] = 0;
+    }
+
+    if (solver(picross, 0) != 0) {
       continuer = -1;
     }
   }
