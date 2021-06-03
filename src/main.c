@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[]) {
   srand(time(NULL));
-
+  //Hello
   int size, retour;
 
   if (argc != 3){
