@@ -4,7 +4,7 @@ else
 	CC = gcc
 endif
 
-CFLAGS=-I. -g3 -Wall -W -g -O2 -O3
+CFLAGS=-I. -g3 -Wall -W -g -O3
 
 BUILD_TARGET ?= picross.exe
 BUILD_DIR ?= ./build

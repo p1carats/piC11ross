@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
       return retour;
     }else if (argv[1][1] == 'g'){
       size = atoi(argv[2]);
-      if (size == 5 || size == 10 || size == 15 || size == 20) {
+      if (size > 0) {
         printf("Creating ...\n");
         retour = generateur(size);
       }else{
